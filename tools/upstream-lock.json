@@ -109,5 +109,11 @@
   "runtimeAcceptanceReport": {
     "path": "tools/author-source/runtime-1.0.0-report.json",
     "sha256": "ded06f12d2af54edea5ae38173dfadcb528d5f589e0a72d26377197d9064ebf0"
+  },
+  "publicationConfigOverrides": {
+    "path": "tools/pack-config-overrides.json",
+    "sizeBytes": 321,
+    "sha256": "f6270b506b358cff17cff4709721671af90abe147037a10c85148b80963cf82e",
+    "reason": "One native display-only config projection; raw author source and all JAR bytes remain unchanged."
   }
 }

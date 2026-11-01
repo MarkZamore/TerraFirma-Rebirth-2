@@ -76,6 +76,27 @@ class AuthorFidelityTests(unittest.TestCase):
                     verify(self.root)
                 self.put(path, previous)
 
+    def test_publication_projection_is_declared_but_author_source_stays_exact(self):
+        raw = b'[display]\r\ndoPopUpLogging = true\r\nother = 21\r\n'
+        self.put('config/author.toml', raw)
+        self.rows[1].update(self.pin('config/author.toml'))
+        self.persist_snapshot()
+        policy = 'tools/pack-config-overrides.json'
+        self.write_json(policy, {'schemaVersion': 1, 'overrides': [{
+            'path': 'config/author.toml', 'table': ['display'],
+            'key': 'doPopUpLogging', 'value': False, 'reason': 'Local popup preference'}]})
+        with self.assertRaisesRegex(ValueError, 'pinned policy'):
+            verify(self.root)
+        self.lock['publicationConfigOverrides'] = self.pin(policy)
+        self.write_json('tools/upstream-lock.json', self.lock)
+        result = verify(self.root)
+        self.assertEqual(0, result['modifiedAuthorFiles'])
+        self.assertEqual(1, len(result['publishedAuthorConfigOverrides']))
+        self.assertEqual(raw, (self.root/'config/author.toml').read_bytes())
+        self.put('config/author.toml', raw.replace(b'other = 21', b'other = 22'))
+        with self.assertRaisesRegex(ValueError, 'Author bytes differ'):
+            verify(self.root)
+
     def test_extra_orphan_runtime_files_are_rejected(self):
         for path in ['mods/old.jar', 'config/old.toml', 'shaderpacks/old.zip', 'launcher/old.txt']:
             with self.subTest(path=path):

@@ -59,7 +59,7 @@ r5.8.1, но отсутствуют требуемые базовые ZIP Comple
 `ComplementaryReimagined_r5.8.1.zip`; неизменённый авторский Patcher создаёт
 свои пакеты штатно. Происхождение, размеры и SHA256/SHA512:
 [native-required-shader-inputs.json](tools/author-source/native-required-shader-inputs.json).
-Моды не обновлены, показ ошибок не отключён, авторский `enableShaders=false`
+Моды не обновлены, обычные журналы ошибок сохранены, авторский `enableShaders=false`
 и остальные параметры качества сохранены. Эти два дополнения явно входят в
 support-поставку, а не выдаются за содержимое исходного архива.
 
@@ -72,6 +72,44 @@ support-поставку, а не выдаются за содержимое и�
 Авторский `servers.dat` сохранён в исходниках как часть снимка, но не включён
 в runtime-поставку: личный список серверов принадлежит экземпляру игры.
 Личные миры и настройки при подготовке не читались и не копировались.
+
+## Всплывающие сообщения Euphoria Patcher
+
+Локальное правило сборки отключает `[display].doPopUpLogging` через штатный
+конфиг Euphoria Patcher. Оно скрывает все popup-сообщения патчера, включая
+предупреждения и ошибки; обычные файловые/консольные логи остаются. Подготовка
+шейдеров, остальные параметры патчера, `doDisplayShaderInGameMessage` и
+авторский выбор качества не меняются.
+
+[tools/pack-config-overrides.json](tools/pack-config-overrides.json) хранится
+отдельно от авторского конфига. Генератор применяет правило к байтам поставки
+перед вычислением SHA256 и упаковкой ZIP, не редактируя исходные 2 913 авторских
+файлов. Тем самым проверка точных авторских исходников сохраняется, а runtime
+поставка явно отличается ровно одним boolean в одном авторском конфиге.
+`pack-manifest.json:configOverrides` показывает исходные и поставляемые хеши.
+Для текущей 1.0.0:
+
+- исходный `config/euphoria_patcher/settings.toml`: 2 641 байт, SHA256 `d4ff06f1b6d8b191853b72996f8ba1d20cc90fa4e98e3222ab7fe552cf52b31e`;
+- поставляемый конфиг: 2 642 байта, SHA256 `e72387a3fa1329b3c7d07d74dcf71e4ed58e3e0b35529e58ae561fcb61a25d94`.
+
+При обновлении от автора обновляются исходники, исходный manifest и stock/lock;
+локальное правило сохраняется. Обычный `tools/generate_manifest.py` повторно
+применяет его и к новой авторской версии, сохраняя все остальные байты конфига.
+Workflow проверяет наличие и корректность правила. Отсутствующий, дублирующийся,
+переименованный или изменивший тип ключ прерывает публикацию вместо тихого
+возврата popup. Полные новые авторские настройки не заменяются старой копией.
+
+Конфиг не добавляется в `launcher/pack-owned.txt`: это перезаписало бы остальные
+личные настройки Euphoria. Существующая изменённая личная копия сохраняется
+обычным слиянием лаунчера; для её отключения применяется однократная правка
+только этого boolean. Проверки и сценарий новой авторской версии описаны в
+[tools/test_config_overrides.py](tools/test_config_overrides.py) и
+[tools/test_generate_manifest.py](tools/test_generate_manifest.py).
+
+Новых JAR или способов изменения мира нет; Safety не меняется. Исключений или
+контентных правил в лаунчере для этого изменения нет. Игровой прогон для этой
+настройки не заявляется; исторический runtime-отчёт ниже относится к прежней
+поставке и не является проверкой новой настройки.
 
 ## Авторские изменения и миры
 
@@ -111,6 +149,8 @@ block entity `create_aeronautics_ftb_chunks:contraption_claim_block_entity`
 
 ```sh
 python -B tools/verify_author_stock.py
+python -B tools/config_overrides.py --pack . --check
+python -B -m unittest discover -s tools -p test_config_overrides.py
 python -B -m unittest discover -s tools -p test_verify_author_stock.py
 python -B tools/native-version-metadata/prepare.py --pack . --check
 python -B -m unittest discover -s tools/native-version-metadata -p "test_*.py"

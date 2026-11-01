@@ -29,6 +29,7 @@ Python 3.12, standard library only.
 from __future__ import annotations
 
 from pack_library import stage_library, verify_library
+from config_overrides import project_configs, projection_report
 
 import argparse
 import fnmatch
@@ -141,8 +142,9 @@ def load_portable_pack(pack: Path) -> dict:
 class Staging:
     """Accumulates staged assets, deduplicating byte-identical single-file assets."""
 
-    def __init__(self, assets_dir: Path) -> None:
+    def __init__(self, assets_dir: Path, projected_files: dict[str, bytes] | None = None) -> None:
         self.assets_dir = assets_dir
+        self.projected_files = projected_files or {}
         self.by_name: dict[str, dict] = {}
 
     def add_single_file(self, pack: Path, rel: str, prefix: str,
@@ -184,8 +186,12 @@ class Staging:
                 info.compress_type = method
                 info.external_attr = 0
                 info.create_system = 3  # platform-independent header bytes
-                with archive.open(info, "w") as dst, open(pack / Path(rel), "rb") as srcf:
-                    shutil.copyfileobj(srcf, dst, CHUNK)
+                with archive.open(info, "w") as dst:
+                    if rel in self.projected_files:
+                        dst.write(self.projected_files[rel])
+                    else:
+                        with open(pack / Path(rel), "rb") as srcf:
+                            shutil.copyfileobj(srcf, dst, CHUNK)
                 # ZipFile.open(..., "w") force-sets external_attr 0o600<<16 when it
                 # is 0; reset it before the central directory is written on close.
                 info.external_attr = 0
@@ -224,11 +230,21 @@ def generate(pack: Path, out: Path, revision: str) -> None:
         shipped.append(root_file)
     shipped.sort()  # ordinal (codepoint) order
 
+    # Apply declared pack-local settings to delivered bytes, keeping the raw
+    # author snapshot intact. New author defaults pass through the same rules.
+    projected_files = project_configs(pack)
+    if any(rel not in shipped for rel in projected_files):
+        fail("a declared configuration projection is outside the shipped file set")
+
     # Hash every shipped file once; single-file assets reuse these hashes.
     file_meta: dict[str, tuple[str, int]] = {}
     for rel in shipped:
         path = pack / Path(rel)
-        file_meta[rel] = (sha256_file(path), path.stat().st_size)
+        if rel in projected_files:
+            data = projected_files[rel]
+            file_meta[rel] = (hashlib.sha256(data).hexdigest(), len(data))
+        else:
+            file_meta[rel] = (sha256_file(path), path.stat().st_size)
 
     assets_dir = out / "assets"
     if assets_dir.exists():
@@ -244,7 +260,7 @@ def generate(pack: Path, out: Path, revision: str) -> None:
         name = rel.rsplit("/", 1)[-1].lower()
         return any(fnmatch.fnmatchcase(name, pattern) for pattern in hot_patterns)
 
-    staging = Staging(assets_dir)
+    staging = Staging(assets_dir, projected_files)
     buckets: dict[int, list[str]] = {}
     for rel in per_root.get("mods", []):
         if is_hot(rel):
@@ -300,6 +316,8 @@ def generate(pack: Path, out: Path, revision: str) -> None:
 
     if (pack / "library/content.json").is_file():
         manifest["library"] = stage_library(pack, out, revision)
+    if projected_files:
+        manifest["configOverrides"] = projection_report(pack, projected_files)
 
     manifest_path = out / "pack-manifest.json"
     tmp_path = out / "pack-manifest.json.tmp"

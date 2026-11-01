@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "overrides": [
+    {
+      "path": "config/euphoria_patcher/settings.toml",
+      "table": ["display"],
+      "key": "doPopUpLogging",
+      "value": false,
+      "reason": "Disable Euphoria Patcher popup messages. Shader patching, shader settings and ordinary logs remain enabled."
+    }
+  ]
+}

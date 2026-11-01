@@ -49,6 +49,9 @@ jobs:
           python -B tools/keybinds/build_preset.py --check
           python -B tools/keybinds/check_preset.py
 
+      - name: Check pack-local configuration policy
+        run: python -B tools/config_overrides.py --pack . --check
+
       - name: Generate manifest and stage assets
         run: python tools/generate_manifest.py --pack . --out dist --revision "$GITHUB_SHA"
 

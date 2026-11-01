@@ -5,6 +5,7 @@ import argparse
 import hashlib
 import json
 import pathlib
+from config_overrides import project_configs, projection_report
 
 
 def require(value, message):
@@ -37,7 +38,8 @@ def verify(root):
     require(lock['schemaVersion'] == 1 and lock['kind'] == 'clean-author-curseforge-stock', 'Unexpected author lock kind')
     require(lock.get('authorFilesChanged') == [] and lock.get('authorJarsExcluded') == [],
             'This clean author profile allows no content changes or excluded JARs')
-    for name in ('nativeClientSourceProof', 'nativeRequiredInputsProof', 'runtimeAcceptanceReport'):
+    for name in ('nativeClientSourceProof', 'nativeRequiredInputsProof', 'runtimeAcceptanceReport',
+                 'publicationConfigOverrides'):
         if name in lock:
             row = lock[name]
             path = safe(root, row['path'])
@@ -96,10 +98,17 @@ def verify(root):
     actual_runtime = {path.relative_to(root).as_posix() for name in roots
                       if (root/name).is_dir() for path in (root/name).rglob('*') if path.is_file()}
     require(actual_runtime == expected_runtime, 'Unknown/missing runtime files outside the exact author/support plan')
-    return {'status': 'PASS', 'kind': 'static complete author fidelity', 'authorVersion': lock['authorVersion'],
+    projections = project_configs(root)
+    if projections:
+        require(lock.get('publicationConfigOverrides', {}).get('path') == 'tools/pack-config-overrides.json',
+                'Publication config overrides need a pinned policy')
+        require(set(projections).issubset({row['path'] for row in rows}),
+                'Publication config override must target a recorded author file')
+    return {'status': 'PASS', 'kind': 'static complete author source fidelity', 'authorVersion': lock['authorVersion'],
             'authorFiles': len(rows), 'authorBytes': total, 'authorJars': len(expected_mods),
             'modifiedAuthorFiles': 0, 'excludedAuthorJars': 0,
             'portableSupportFiles': len(support),
+            'publishedAuthorConfigOverrides': projection_report(root, projections),
             'nativeClientOrWorldAcceptanceClaimed': False}
 
 
