@@ -29,6 +29,7 @@ Python 3.12, standard library only.
 from __future__ import annotations
 
 from pack_library import stage_library, verify_library
+import network_logging_policy
 from config_overrides import project_configs, projection_report
 
 import argparse
@@ -211,6 +212,7 @@ class Staging:
 
 
 def generate(pack: Path, out: Path, revision: str) -> None:
+    network_logging_policy.verify(pack)
     portable = load_portable_pack(pack)
     client_jar = portable["clientJar"].replace("\\", "/")
     client_path = pack / Path(client_jar)
@@ -408,6 +410,7 @@ def main() -> None:
         fail(f"pack root does not exist: {pack}")
 
     if args.verify_only or args.verify_all:
+        network_logging_policy.verify(pack)
         verify_only(out, args.verify_all)
         return
 

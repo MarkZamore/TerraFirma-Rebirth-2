@@ -56,8 +56,8 @@
     },
     {
       "path": "config/log4j2.xml",
-      "sizeBytes": 4137,
-      "sha256": "6752b55f7a2ede24cef57d8bab70cfeec8f471f7adb72b6fb13b46853151c65d"
+      "sizeBytes": 4617,
+      "sha256": "9e7b9918b6ede54f7393ed3d307e51a2edb032b98c12f069f5df976bcf940b89"
     },
     {
       "path": "launcher/jvm-args.txt",
@@ -66,8 +66,8 @@
     },
     {
       "path": "launcher/pack-owned.txt",
-      "sizeBytes": 276,
-      "sha256": "75f1c41930f69f91a5d2e044adb21608247196df809858f74930dc79c7554de9"
+      "sizeBytes": 295,
+      "sha256": "93ef6054ca98529459a7c075244a59b1d627901441d507467f0b77d0514fcd8b"
     },
     {
       "path": "launcher/controls-preset.txt",

@@ -3,3 +3,4 @@
 # No dependency override or other author option is edited by this package.
 config/fml.toml
 config/native-version-metadata.jar
+config/log4j2.xml

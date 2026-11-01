@@ -12,6 +12,16 @@ import tomllib
 import zipfile
 
 from generate_manifest import generate, verify_only
+from network_logging_policy import prepare
+
+
+def prepare_logging_fixture(pack):
+    if not (pack / 'portable-pack.json').exists():
+        (pack / 'portable-pack.json').write_text(json.dumps({'minecraftVersion': '1.21.1'}), encoding='utf-8')
+    logging = pack / 'config/log4j2.xml'
+    logging.parent.mkdir(parents=True, exist_ok=True)
+    logging.write_bytes((Path(__file__).resolve().parent.parent / 'config/log4j2.xml').read_bytes())
+    prepare(pack)
 
 
 class ReleaseVerificationTests(unittest.TestCase):
@@ -30,6 +40,7 @@ class ReleaseVerificationTests(unittest.TestCase):
             (pack / 'tools/pack-config-overrides.json').write_text(json.dumps({
                 'schemaVersion': 1, 'overrides': [{'path': relative, 'table': ['display'],
                     'key': 'doPopUpLogging', 'value': False, 'reason': 'Local popup preference'}]}), encoding='utf-8')
+            prepare_logging_fixture(pack)
             authors = [
                 b'# author v1\r\n[display]\r\ndoPopUpLogging = true # visible popup\r\nother = 7\r\n',
                 b'# author v2\r\n[display]\r\ndoPopUpLogging = true # new default\r\nother = 19\r\nnewOption = "keep"\r\n']
@@ -57,6 +68,7 @@ class ReleaseVerificationTests(unittest.TestCase):
             root = Path(temporary)
             pack = root / 'source'
             pack.mkdir()
+            prepare_logging_fixture(pack)
             dist = root / 'dist'
             assets = dist / 'assets'
             assets.mkdir(parents=True)
