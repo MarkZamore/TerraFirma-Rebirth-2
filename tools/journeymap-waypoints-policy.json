@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "kind": "pack-owned-waypoint-generation-association",
+  "platform": {
+    "minecraftVersion": "1.21.1",
+    "loader": {
+      "type": "neoforge",
+      "version": "21.1.248"
+    }
+  },
+  "script": {
+    "path": "kubejs/startup_scripts/lanmc_journeymap_waypoint_policy.js",
+    "sizeBytes": 24755,
+    "sha256": "720906f4e452f2124628fcc244a0b03b52c1157cd79a73a2803a212042709479",
+    "template": "tools/client-policy/scripts/lanmc_journeymap_waypoint_policy.js"
+  },
+  "nativeModules": [
+    {
+      "modId": "journeymap",
+      "path": "mods/journeymap-neoforge-1.21.1-6.0.3.jar",
+      "sizeBytes": 4156889,
+      "sha256": "d20006d674b577f352c813ac0864581597f38f03bdc8cbd4d1f2501cf95f3b0a"
+    },
+    {
+      "modId": "kubejs",
+      "path": "mods/kubejs-neoforge-2101.7.2-build.368.jar",
+      "sizeBytes": 2281720,
+      "sha256": "28867299e7a9f02cfd74e34745fdbbb073fe4887fddbc98fd6c1ed2e87b01482"
+    },
+    {
+      "modId": "rhino",
+      "path": "mods/rhino-2101.2.8-build.91.jar",
+      "sizeBytes": 980936,
+      "sha256": "1d53d962aa4dac54bcbb4f998c1845980cf194318f1d6b1580ea6ac15cce5ef3"
+    }
+  ],
+  "sourceOnlyVerifier": "tools/waypoint_source_policy.py",
+  "nativePublicApiProof": "tools/qa/journeymap-native-1211.json",
+  "firstMigration": "Associate existing saves with per-world UUIDs and preserve/adopt existing waypoint data once; do not delete historical points.",
+  "onlyRuntimeScope": "Singleplayer waypoint generation ownership; retain displaced waypoint sets under local/lanmc-waypoint-archives/v1 and restore matching generations.",
+  "nativeMapResolver": "FileHandler.getJMWorldDirForWorldId(Minecraft,String), with guarded missing/existing ancestor validation before any policy directory creation.",
+  "nativeSavesAnchor": "Minecraft.getInstance().getLevelSource().getBaseDir(), lexical game/saves only; pin its canonical target once and reject child aliases/retargets.",
+  "unchanged": [
+    "all author JARs",
+    "personal JourneyMap options",
+    "map PNG/image cache",
+    "world NBT/game mechanics",
+    "remote multiplayer waypoint data",
+    "launcher code"
+  ],
+  "limits": [
+    "Only one active client per game directory; external concurrent edits are unsupported.",
+    "Already-contaminated legacy waypoint data cannot be attributed to world generations safely and is preserved during first migration.",
+    "Native deferred deathpoint creation sleeps at least three seconds and does not capture world generation; that separate native race is not changed by this association policy.",
+    "No real Minecraft startup, NeoForge event-bus delivery, rendering or world visibility acceptance is claimed by the artifact-only native tests.",
+    "This is rollback/process-interruption recovery, not a hardware/power-loss fsync guarantee."
+  ],
+  "nativePublicApiProofSha256": "af9ac85ac2ff2c797c92339b8a5e653bad6878c3855bde29965dcb4047952fcb"
+}

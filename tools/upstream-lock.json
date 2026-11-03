@@ -66,8 +66,8 @@
     },
     {
       "path": "launcher/pack-owned.txt",
-      "sizeBytes": 295,
-      "sha256": "93ef6054ca98529459a7c075244a59b1d627901441d507467f0b77d0514fcd8b"
+      "sizeBytes": 355,
+      "sha256": "53976f48e87caa1fe1ac6e7e8dd02876aa4d16dec4fc9ee0b34c30efdc40cccf"
     },
     {
       "path": "launcher/controls-preset.txt",
@@ -92,6 +92,13 @@
       "sizeBytes": 546925,
       "kind": "native-required-input",
       "reason": "Exact unmodified Complementaryr5.8.1 base required by author EuphoriaPatcher1.9.3; missing from author export. Native author patcher produces its own packs. No mod/config/effect setting changed."
+    },
+    {
+      "path": "kubejs/startup_scripts/lanmc_journeymap_waypoint_policy.js",
+      "sizeBytes": 24755,
+      "sha256": "720906f4e452f2124628fcc244a0b03b52c1157cd79a73a2803a212042709479",
+      "kind": "pack-owned-startup-script",
+      "reason": "Singleplayer waypoint generation association; source-owned layer, no author JAR/config changes and no map/world data bundled."
     }
   ],
   "originalManifest": {

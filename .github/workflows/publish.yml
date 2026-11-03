@@ -36,6 +36,9 @@ jobs:
       - name: Verify prepared native version metadata
         run: python -B tools/native-version-metadata/prepare.py --pack . --check
 
+      - name: Restore and verify owned JourneyMap world associations
+        run: python -B tools/waypoint_source_policy.py prepare --pack . --apply
+
       - name: Verify complete author stock
         run: |
           python -B tools/verify_author_stock.py

@@ -1,0 +1,593 @@
+{
+  "status": "PASS_EXACT_SOURCE_JAR_AND_NATIVE_PUBLIC_API_ONLY",
+  "profiles": [
+    {
+      "pack": "All The Mods 10",
+      "minecraftVersion": "1.21.1",
+      "loader": {
+        "type": "neoforge",
+        "version": "21.1.265"
+      },
+      "modules": {
+        "journeymap": {
+          "fileName": "journeymap-neoforge-1.21.1-6.0.9.jar",
+          "sizeBytes": 4320499,
+          "sha256": "9bd7734542233d5281750572f17a9258449e826650c081e9a67dc426262c2fde",
+          "gitBlobSha1": "160e56c1169389c97285b1d356a07e25d16f9c96"
+        },
+        "kubejs": {
+          "fileName": "kubejs-neoforge-2101.7.2-build.377.jar",
+          "sizeBytes": 2294111,
+          "sha256": "43b656bc2d4ce867141abb828c9481f080a38585b99bcfa07e54732a4976a601",
+          "gitBlobSha1": "fc5a87dbf251856ec3d8cb7c519e6204faa3936d"
+        },
+        "rhino": {
+          "fileName": "rhino-2101.2.8-build.91.jar",
+          "sizeBytes": 980936,
+          "sha256": "1d53d962aa4dac54bcbb4f998c1845980cf194318f1d6b1580ea6ac15cce5ef3",
+          "gitBlobSha1": "0228a607638be57212bb92a77a7ddaa3153049cc"
+        },
+        "minecraft-client": {
+          "fileName": "neoforge-21.1.265-client.jar",
+          "sizeBytes": 5698522,
+          "sha256": "374997701b28d3c9374d5dd5fa8bdd96e4143a6786ccba660246b4451a0be23d",
+          "gitBlobSha1": "6b0c5fc5502dd51e6cdddb1c6609815b06deb8ea"
+        },
+        "minecraft-base": {
+          "fileName": "client-1.21.1-20240808.144430-srg.jar",
+          "sizeBytes": 18725656,
+          "sha256": "a649bd3ce77f122d0f83ae1b37b4b303e662470f928b9bee5fbc76580805ffd4",
+          "gitBlobSha1": "bc4c16f4d156c49b8bd381c3d74456d13c13d5aa"
+        },
+        "neoforge-universal": {
+          "fileName": "neoforge-21.1.265-universal.jar",
+          "sizeBytes": 3559126,
+          "sha256": "c12cf1a6cb0aa7792b13174b06088a4f54d8bcc92f6a32fcb03310b456936847",
+          "gitBlobSha1": "44ace2db856b34fae99a2d7d3c4d5cc84f3ef889"
+        },
+        "bus": {
+          "fileName": "bus-8.0.5.jar",
+          "sizeBytes": 30340,
+          "sha256": "705e24f37752809499a5cd0c7dd31eaabf3d933c5d3b2060168e94e9ef62593a",
+          "gitBlobSha1": "d4ca9449aa9a3bb5394587f9ec0ffc0fd0afa5c8"
+        }
+      },
+      "checks": [
+        {
+          "owner": "journeymap",
+          "class": "journeymap/client/io/FileHandler",
+          "sha256": "0eff2847b256067c7b302ffbb04bdd8a9322eb98e9c9d28955f112ba55a0beb0",
+          "members": [
+            {
+              "kind": "methods",
+              "name": "getJMWorldDirForWorldId",
+              "descriptor": "(Lnet/minecraft/client/Minecraft;Ljava/lang/String;)Ljava/io/File;",
+              "static": true
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "journeymap",
+          "class": "journeymap/client/JourneymapClient",
+          "sha256": "921c0a85ef2443f48132c0102f2ff6cf751d4d17d02f2522919d3af898e4f4dc",
+          "members": [
+            {
+              "kind": "methods",
+              "name": "getInstance",
+              "descriptor": "()Ljourneymap/client/JourneymapClient;",
+              "static": true
+            },
+            {
+              "kind": "methods",
+              "name": "getCurrentWorldId",
+              "descriptor": "()Ljava/lang/String;",
+              "static": false
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "kubejs",
+          "class": "dev/latvian/mods/kubejs/KubeJSPaths",
+          "sha256": "07f85d37e3bfea260e9b1a26883b2ace9292cf4c2240490971aea1dddf5db4be",
+          "members": [
+            {
+              "kind": "fields",
+              "name": "GAMEDIR",
+              "descriptor": "Ljava/nio/file/Path;",
+              "static": true
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "kubejs",
+          "class": "dev/latvian/mods/kubejs/plugin/builtin/wrapper/NativeEventWrapper",
+          "sha256": "66e16a47a403ad08dad90a1af140e29599044c2f4be57d54caf5a2a31134a8fe",
+          "members": [
+            {
+              "kind": "methods",
+              "name": "onEvent",
+              "descriptor": "(Ldev/latvian/mods/rhino/Context;Lnet/neoforged/bus/api/EventPriority;Ljava/lang/Class;Ljava/util/function/Consumer;)V",
+              "static": true
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "kubejs",
+          "class": "dev/latvian/mods/kubejs/plugin/builtin/event/StartupEvents",
+          "sha256": "17a4da25d3d3fff05b7cab2978f15f5ea54b7e6c161c8097b8fad5dd36414a4d",
+          "members": [
+            {
+              "kind": "fields",
+              "name": "POST_INIT",
+              "descriptor": "Ldev/latvian/mods/kubejs/event/EventHandler;",
+              "static": true
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "kubejs",
+          "class": "dev/latvian/mods/kubejs/script/PlatformWrapper",
+          "sha256": "841e707abe92c0d406721d111e7910ef185cf06a2c039ec48e6814cb45f11ba3",
+          "members": [
+            {
+              "kind": "methods",
+              "name": "isLoaded",
+              "descriptor": "(Ljava/lang/String;)Z",
+              "static": true
+            },
+            {
+              "kind": "methods",
+              "name": "isClientEnvironment",
+              "descriptor": "()Z",
+              "static": true
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "rhino",
+          "class": "dev/latvian/mods/rhino/ContextFactory",
+          "sha256": "4897c69676edb13388ccab8ab83f1c0911cb9d915eb428caeb112f717401c8c8",
+          "members": [
+            {
+              "kind": "methods",
+              "name": "enter",
+              "descriptor": "()Ldev/latvian/mods/rhino/Context;",
+              "static": false
+            },
+            {
+              "kind": "methods",
+              "name": "getTypeWrappers",
+              "descriptor": "()Ldev/latvian/mods/rhino/util/wrap/TypeWrappers;",
+              "static": false
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "minecraft-client",
+          "class": "net/minecraft/client/Minecraft",
+          "sha256": "495f5dc97d07476e23835fcdd034019a020a58b980f7c764d4953ce4ed16d283",
+          "members": [
+            {
+              "kind": "methods",
+              "name": "getInstance",
+              "descriptor": "()Lnet/minecraft/client/Minecraft;",
+              "static": true
+            },
+            {
+              "kind": "methods",
+              "name": "getLevelSource",
+              "descriptor": "()Lnet/minecraft/world/level/storage/LevelStorageSource;",
+              "static": false
+            },
+            {
+              "kind": "methods",
+              "name": "hasSingleplayerServer",
+              "descriptor": "()Z",
+              "static": false
+            },
+            {
+              "kind": "methods",
+              "name": "getSingleplayerServer",
+              "descriptor": "()Lnet/minecraft/client/server/IntegratedServer;",
+              "static": false
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "minecraft-client",
+          "class": "net/minecraft/world/level/storage/LevelStorageSource",
+          "sha256": "d555d6f9cf4c1d75e3d1aeeda63b4f9d579c2750a654a00bb3c49da644bd308d",
+          "members": [
+            {
+              "kind": "methods",
+              "name": "getBaseDir",
+              "descriptor": "()Ljava/nio/file/Path;",
+              "static": false
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "minecraft-client",
+          "class": "net/minecraft/server/MinecraftServer",
+          "sha256": "3f1b7a260a249ae836d9d71bf0a0fe7575b62aff48f2b8fac10dd06aaa9efd2f",
+          "members": [
+            {
+              "kind": "methods",
+              "name": "getWorldPath",
+              "descriptor": "(Lnet/minecraft/world/level/storage/LevelResource;)Ljava/nio/file/Path;",
+              "static": false
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "minecraft-base",
+          "class": "net/minecraft/world/level/storage/LevelResource",
+          "sha256": "2ecbf118090c2b7b2150fdfc1eda0da20a410fc54a566c1c7f72711c226672ff",
+          "members": [
+            {
+              "kind": "fields",
+              "name": "ROOT",
+              "descriptor": "Lnet/minecraft/world/level/storage/LevelResource;",
+              "static": true
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "neoforge-universal",
+          "class": "net/neoforged/neoforge/client/event/ClientPlayerNetworkEvent$LoggingIn",
+          "sha256": "642835f825b3ec14159139c869a998698b72ff5e1146d2967003eb675e34e08b",
+          "members": [],
+          "status": "PASS"
+        },
+        {
+          "owner": "bus",
+          "class": "net/neoforged/bus/api/EventPriority",
+          "sha256": "d773ea4201b6a04754d20e60bf4518ba4c7336f969723350e53edb5947a960e3",
+          "members": [
+            {
+              "kind": "fields",
+              "name": "HIGHEST",
+              "descriptor": "Lnet/neoforged/bus/api/EventPriority;",
+              "static": true
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "journeymap",
+          "class": "journeymap/client/event/handlers/DeathPointHandler",
+          "sha256": "965b3f99c77e8a172bbdbb3f0405385eb818dff5753f369e201d4832ec14af29",
+          "status": "REVIEWED_BYTECODE_SEPARATELY"
+        },
+        {
+          "owner": "journeymap",
+          "class": "journeymap/client/io/FileHandler",
+          "sha256": "0eff2847b256067c7b302ffbb04bdd8a9322eb98e9c9d28955f112ba55a0beb0",
+          "status": "REVIEWED_BYTECODE_SEPARATELY"
+        }
+      ],
+      "removedUtilsFileApiAvoided": true,
+      "classLoadOrFullGameAcceptanceClaimed": false
+    },
+    {
+      "pack": "TerraFirma Rebirth 2",
+      "minecraftVersion": "1.21.1",
+      "loader": {
+        "type": "neoforge",
+        "version": "21.1.248"
+      },
+      "modules": {
+        "journeymap": {
+          "fileName": "journeymap-neoforge-1.21.1-6.0.3.jar",
+          "sizeBytes": 4156889,
+          "sha256": "d20006d674b577f352c813ac0864581597f38f03bdc8cbd4d1f2501cf95f3b0a",
+          "gitBlobSha1": "f44faf8881507d09fd113e03baf1b904fe564d86"
+        },
+        "kubejs": {
+          "fileName": "kubejs-neoforge-2101.7.2-build.368.jar",
+          "sizeBytes": 2281720,
+          "sha256": "28867299e7a9f02cfd74e34745fdbbb073fe4887fddbc98fd6c1ed2e87b01482",
+          "gitBlobSha1": "62cd800b21ceb12658b9e860df2759d32270aed3"
+        },
+        "rhino": {
+          "fileName": "rhino-2101.2.8-build.91.jar",
+          "sizeBytes": 980936,
+          "sha256": "1d53d962aa4dac54bcbb4f998c1845980cf194318f1d6b1580ea6ac15cce5ef3",
+          "gitBlobSha1": "0228a607638be57212bb92a77a7ddaa3153049cc"
+        },
+        "minecraft-client": {
+          "fileName": "neoforge-21.1.248-client.jar",
+          "sizeBytes": 5675624,
+          "sha256": "01ba27020f208050884661ff393be3c392e02853d91825f9d5f1bb694282e83b",
+          "gitBlobSha1": "f35788e97e14302fc6c6aa45ac322653e040d668"
+        },
+        "minecraft-base": {
+          "fileName": "client-1.21.1-20240808.144430-srg.jar",
+          "sizeBytes": 18725656,
+          "sha256": "a649bd3ce77f122d0f83ae1b37b4b303e662470f928b9bee5fbc76580805ffd4",
+          "gitBlobSha1": "bc4c16f4d156c49b8bd381c3d74456d13c13d5aa"
+        },
+        "neoforge-universal": {
+          "fileName": "neoforge-21.1.248-universal.jar",
+          "sizeBytes": 3551268,
+          "sha256": "90a56f70425711b4e1a4b94ff0c2904ae9f6d74ca6478b3b2152ac794a07b8e5",
+          "gitBlobSha1": "da84dabc3bf08f49556bd70aafd44de55e878f03"
+        },
+        "bus": {
+          "fileName": "bus-8.0.5.jar",
+          "sizeBytes": 30340,
+          "sha256": "705e24f37752809499a5cd0c7dd31eaabf3d933c5d3b2060168e94e9ef62593a",
+          "gitBlobSha1": "d4ca9449aa9a3bb5394587f9ec0ffc0fd0afa5c8"
+        }
+      },
+      "checks": [
+        {
+          "owner": "journeymap",
+          "class": "journeymap/client/io/FileHandler",
+          "sha256": "0eff2847b256067c7b302ffbb04bdd8a9322eb98e9c9d28955f112ba55a0beb0",
+          "members": [
+            {
+              "kind": "methods",
+              "name": "getJMWorldDirForWorldId",
+              "descriptor": "(Lnet/minecraft/client/Minecraft;Ljava/lang/String;)Ljava/io/File;",
+              "static": true
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "journeymap",
+          "class": "journeymap/client/JourneymapClient",
+          "sha256": "1ccb00c950d34c49dc81a32291e745a467caa99f690cc5d351a2c2015c630f61",
+          "members": [
+            {
+              "kind": "methods",
+              "name": "getInstance",
+              "descriptor": "()Ljourneymap/client/JourneymapClient;",
+              "static": true
+            },
+            {
+              "kind": "methods",
+              "name": "getCurrentWorldId",
+              "descriptor": "()Ljava/lang/String;",
+              "static": false
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "kubejs",
+          "class": "dev/latvian/mods/kubejs/KubeJSPaths",
+          "sha256": "07f85d37e3bfea260e9b1a26883b2ace9292cf4c2240490971aea1dddf5db4be",
+          "members": [
+            {
+              "kind": "fields",
+              "name": "GAMEDIR",
+              "descriptor": "Ljava/nio/file/Path;",
+              "static": true
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "kubejs",
+          "class": "dev/latvian/mods/kubejs/plugin/builtin/wrapper/NativeEventWrapper",
+          "sha256": "66e16a47a403ad08dad90a1af140e29599044c2f4be57d54caf5a2a31134a8fe",
+          "members": [
+            {
+              "kind": "methods",
+              "name": "onEvent",
+              "descriptor": "(Ldev/latvian/mods/rhino/Context;Lnet/neoforged/bus/api/EventPriority;Ljava/lang/Class;Ljava/util/function/Consumer;)V",
+              "static": true
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "kubejs",
+          "class": "dev/latvian/mods/kubejs/plugin/builtin/event/StartupEvents",
+          "sha256": "17a4da25d3d3fff05b7cab2978f15f5ea54b7e6c161c8097b8fad5dd36414a4d",
+          "members": [
+            {
+              "kind": "fields",
+              "name": "POST_INIT",
+              "descriptor": "Ldev/latvian/mods/kubejs/event/EventHandler;",
+              "static": true
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "kubejs",
+          "class": "dev/latvian/mods/kubejs/script/PlatformWrapper",
+          "sha256": "841e707abe92c0d406721d111e7910ef185cf06a2c039ec48e6814cb45f11ba3",
+          "members": [
+            {
+              "kind": "methods",
+              "name": "isLoaded",
+              "descriptor": "(Ljava/lang/String;)Z",
+              "static": true
+            },
+            {
+              "kind": "methods",
+              "name": "isClientEnvironment",
+              "descriptor": "()Z",
+              "static": true
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "rhino",
+          "class": "dev/latvian/mods/rhino/ContextFactory",
+          "sha256": "4897c69676edb13388ccab8ab83f1c0911cb9d915eb428caeb112f717401c8c8",
+          "members": [
+            {
+              "kind": "methods",
+              "name": "enter",
+              "descriptor": "()Ldev/latvian/mods/rhino/Context;",
+              "static": false
+            },
+            {
+              "kind": "methods",
+              "name": "getTypeWrappers",
+              "descriptor": "()Ldev/latvian/mods/rhino/util/wrap/TypeWrappers;",
+              "static": false
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "minecraft-client",
+          "class": "net/minecraft/client/Minecraft",
+          "sha256": "495f5dc97d07476e23835fcdd034019a020a58b980f7c764d4953ce4ed16d283",
+          "members": [
+            {
+              "kind": "methods",
+              "name": "getInstance",
+              "descriptor": "()Lnet/minecraft/client/Minecraft;",
+              "static": true
+            },
+            {
+              "kind": "methods",
+              "name": "getLevelSource",
+              "descriptor": "()Lnet/minecraft/world/level/storage/LevelStorageSource;",
+              "static": false
+            },
+            {
+              "kind": "methods",
+              "name": "hasSingleplayerServer",
+              "descriptor": "()Z",
+              "static": false
+            },
+            {
+              "kind": "methods",
+              "name": "getSingleplayerServer",
+              "descriptor": "()Lnet/minecraft/client/server/IntegratedServer;",
+              "static": false
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "minecraft-client",
+          "class": "net/minecraft/world/level/storage/LevelStorageSource",
+          "sha256": "d555d6f9cf4c1d75e3d1aeeda63b4f9d579c2750a654a00bb3c49da644bd308d",
+          "members": [
+            {
+              "kind": "methods",
+              "name": "getBaseDir",
+              "descriptor": "()Ljava/nio/file/Path;",
+              "static": false
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "minecraft-client",
+          "class": "net/minecraft/server/MinecraftServer",
+          "sha256": "3f1b7a260a249ae836d9d71bf0a0fe7575b62aff48f2b8fac10dd06aaa9efd2f",
+          "members": [
+            {
+              "kind": "methods",
+              "name": "getWorldPath",
+              "descriptor": "(Lnet/minecraft/world/level/storage/LevelResource;)Ljava/nio/file/Path;",
+              "static": false
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "minecraft-base",
+          "class": "net/minecraft/world/level/storage/LevelResource",
+          "sha256": "2ecbf118090c2b7b2150fdfc1eda0da20a410fc54a566c1c7f72711c226672ff",
+          "members": [
+            {
+              "kind": "fields",
+              "name": "ROOT",
+              "descriptor": "Lnet/minecraft/world/level/storage/LevelResource;",
+              "static": true
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "neoforge-universal",
+          "class": "net/neoforged/neoforge/client/event/ClientPlayerNetworkEvent$LoggingIn",
+          "sha256": "642835f825b3ec14159139c869a998698b72ff5e1146d2967003eb675e34e08b",
+          "members": [],
+          "status": "PASS"
+        },
+        {
+          "owner": "bus",
+          "class": "net/neoforged/bus/api/EventPriority",
+          "sha256": "d773ea4201b6a04754d20e60bf4518ba4c7336f969723350e53edb5947a960e3",
+          "members": [
+            {
+              "kind": "fields",
+              "name": "HIGHEST",
+              "descriptor": "Lnet/neoforged/bus/api/EventPriority;",
+              "static": true
+            }
+          ],
+          "status": "PASS"
+        },
+        {
+          "owner": "journeymap",
+          "class": "journeymap/client/event/handlers/DeathPointHandler",
+          "sha256": "965b3f99c77e8a172bbdbb3f0405385eb818dff5753f369e201d4832ec14af29",
+          "status": "REVIEWED_BYTECODE_SEPARATELY"
+        },
+        {
+          "owner": "journeymap",
+          "class": "journeymap/client/io/FileHandler",
+          "sha256": "0eff2847b256067c7b302ffbb04bdd8a9322eb98e9c9d28955f112ba55a0beb0",
+          "status": "REVIEWED_BYTECODE_SEPARATELY"
+        }
+      ],
+      "removedUtilsFileApiAvoided": true,
+      "classLoadOrFullGameAcceptanceClaimed": false
+    }
+  ],
+  "negativeFixtures": [
+    {
+      "status": "PASS",
+      "rejects": {
+        "kind": "methods",
+        "name": "missing",
+        "descriptor": "()V",
+        "static": true
+      }
+    },
+    {
+      "status": "PASS",
+      "rejects": {
+        "kind": "methods",
+        "name": "kept",
+        "descriptor": "()I",
+        "static": true
+      }
+    },
+    {
+      "status": "PASS",
+      "rejects": {
+        "kind": "methods",
+        "name": "kept",
+        "descriptor": "()V",
+        "static": false
+      }
+    }
+  ],
+  "fullMinecraftOrVisualAcceptanceClaimed": false
+}

@@ -4,3 +4,4 @@
 config/fml.toml
 config/native-version-metadata.jar
 config/log4j2.xml
+kubejs/startup_scripts/lanmc_journeymap_waypoint_policy.js

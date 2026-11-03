@@ -6,6 +6,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 import contextlib
 import io
 import tomllib
@@ -22,6 +23,23 @@ def prepare_logging_fixture(pack):
     logging.parent.mkdir(parents=True, exist_ok=True)
     logging.write_bytes((Path(__file__).resolve().parent.parent / 'config/log4j2.xml').read_bytes())
     prepare(pack)
+
+
+# These cases test asset verification/config projection. The independent native
+# waypoint policy is covered strictly by test_waypoint_source_policy.py; keep
+# the production CLI and its logging gate real, isolating only this dependency.
+ASSET_CLI_RUNNER = """
+from pathlib import Path
+import runpy
+import sys
+from unittest.mock import patch
+script = sys.argv.pop(1)
+sys.argv[0] = script
+sys.path.insert(0, str(Path(script).resolve().parent))
+with patch('waypoint_source_policy.verify') as native_waypoint_gate:
+    runpy.run_path(script, run_name='__main__')
+    native_waypoint_gate.assert_called_once()
+"""
 
 
 class ReleaseVerificationTests(unittest.TestCase):
@@ -46,9 +64,11 @@ class ReleaseVerificationTests(unittest.TestCase):
                 b'# author v2\r\n[display]\r\ndoPopUpLogging = true # new default\r\nother = 19\r\nnewOption = "keep"\r\n']
             for version, raw in enumerate(authors):
                 config.write_bytes(raw)
-                with contextlib.redirect_stdout(io.StringIO()):
-                    generate(pack, out, 'author-' + str(version))
-                    verify_only(out, verify_all=True)
+                with patch('generate_manifest.waypoint_source_policy.verify') as native_waypoint_gate:
+                    with contextlib.redirect_stdout(io.StringIO()):
+                        generate(pack, out, 'author-' + str(version))
+                        verify_only(out, verify_all=True)
+                    native_waypoint_gate.assert_called_once_with(pack)
                 manifest = json.loads((out / 'pack-manifest.json').read_text(encoding='utf-8'))
                 row = next(row for row in manifest['files'] if row['path'] == relative)
                 asset = next(row for row in manifest['assets'] if relative in row['covers'])
@@ -82,7 +102,7 @@ class ReleaseVerificationTests(unittest.TestCase):
             manifest = dist / 'pack-manifest.json'
             manifest.write_text(json.dumps({'assets': rows}), encoding='utf-8')
             original_manifest = manifest.read_bytes()
-            command = [sys.executable, str(Path(__file__).with_name('generate_manifest.py')),
+            command = [sys.executable, '-c', ASSET_CLI_RUNNER, str(Path(__file__).with_name('generate_manifest.py')),
                        '--pack', str(pack), '--out', str(dist), '--verify-all']
             passed = subprocess.run(command, capture_output=True, text=True, timeout=30)
             self.assertEqual(0, passed.returncode, passed.stdout + passed.stderr)
