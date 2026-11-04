@@ -17,7 +17,7 @@ class LoggingPolicyTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         self.pack = Path(self.temp.name) / "Source Pack"
         self.pack.mkdir()
-        self.write("portable-pack.json", b'{"minecraftVersion":"1.20.1"}')
+        self.write("portable-pack.json", b'{"minecraftVersion":"1.21.1"}')
         self.template = (HERE.parent / "config/log4j2.xml").read_bytes()
         text = self.template.decode("utf-8-sig")
         start = text.index("        <!-- Preserve only Connection's caught throwable diagnostics")
@@ -174,7 +174,7 @@ class LoggingPolicyTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             policy.prepare(self.pack)
         self.assertEqual(before, self.snapshot())
-        self.write("portable-pack.json", b'{"minecraftVersion":"1.20.1"}')
+        self.write("portable-pack.json", b'{"minecraftVersion":"1.21.1"}')
         self.write(".portable-instance.json", b"{}")
         before = self.snapshot()
         with self.assertRaises(ValueError):

@@ -12,7 +12,7 @@ class LibraryPublisherTests(unittest.TestCase):
         self.pack = pathlib.Path(self.temp.name) / "Example Pack"
         (self.pack / "mods").mkdir(parents=True)
         (self.pack / "library").mkdir()
-        (self.pack / "portable-pack.json").write_text(json.dumps({"minecraftVersion": "1.21.1", "loader": {"type": "NeoForge"}}))
+        (self.pack / "portable-pack.json").write_text(json.dumps({"minecraftVersion": "1.21.1", "loader": {"type": "neoforge", "version": "21.1.248"}}))
         self.content = {"id": "example", "name": "Example", "relativePath": "Stable Folder", "summary": "A short story", "description": "A longer story",
                         "parents": {"addon": "base"}, "libraryIds": ["helper"]}
         self.pages = {mid: "https://www.curseforge.com/minecraft/mc-mods/" + mid

@@ -52,8 +52,11 @@ After independently checking the new author manifest and stock snapshot, run:
 python -B tools/hand_depth_policy.py prepare --pack . --apply
 python -B tools/hand_depth_policy.py verify --pack .
 python -B -m unittest discover -s tools -p test_hand_depth_policy.py -v
-node tools/hand-depth/test_runtime.js
 ```
+
+The unit suite also runs all 15 cases in `tools/hand-depth/test_runtime.js`
+through `test_actual_template_behavior`; no separate Node invocation is needed
+when following this sequence.
 
 `prepare --apply` restores a missing exact owned copy, appends a missing exact
 ownership line while preserving all other bytes, and updates only the runtime

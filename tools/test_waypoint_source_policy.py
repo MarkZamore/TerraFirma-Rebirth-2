@@ -17,7 +17,7 @@ class WaypointSourcePolicyTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
         self.write('portable-pack.json', json.dumps({'minecraftVersion': '1.21.1',
-            'loader': {'type': 'neoforge', 'version': '21.1.265'}, 'clientJar': 'fixture.jar'}).encode())
+            'loader': {'type': 'neoforge', 'version': '21.1.248'}, 'clientJar': 'fixture.jar'}).encode())
         self.write('launcher/pack-owned.txt', (policy.SCRIPT + '\n').encode())
         self.script = b'// synthetic owned fixture, not a runtime or native test\n'
         self.write(policy.TEMPLATE, self.script)
@@ -27,7 +27,7 @@ class WaypointSourcePolicyTests(unittest.TestCase):
             path = 'mods/' + mod + '.jar'
             self.write(path, ('synthetic source bytes: ' + mod).encode())
             modules.append(dict(self.pin(path), modId=mod))
-        profile = {'minecraftVersion': '1.21.1', 'loader': {'type': 'neoforge', 'version': '21.1.265'},
+        profile = {'minecraftVersion': '1.21.1', 'loader': {'type': 'neoforge', 'version': '21.1.248'},
             'modules': {row['modId']: {'fileName': row['path'].split('/')[-1],
                 'sizeBytes': row['sizeBytes'], 'sha256': row['sha256']} for row in modules}}
         self.proof = {'status': 'PASS_EXACT_SOURCE_JAR_AND_NATIVE_PUBLIC_API_ONLY', 'profiles': [profile]}
@@ -101,7 +101,7 @@ class WaypointSourcePolicyTests(unittest.TestCase):
 
     def test_platform_update_requires_reviewed_profile(self):
         self.dump('portable-pack.json', {'minecraftVersion': '1.21.1',
-            'loader': {'type': 'neoforge', 'version': '21.1.266'}})
+            'loader': {'type': 'neoforge', 'version': '21.1.249'}})
         with self.assertRaisesRegex(ValueError, 'platform changed'):
             policy.verify(self.root)
 

@@ -54,8 +54,8 @@ personal configuration remains untouched. `tools` and preparation history are
 source-only and are excluded from game payloads.
 
 The tests cover source pins, native identity/type/size/duplicate validation,
-zero-class projection, exact byte preservation, retries, a future base version,
-older-client retirement, collisions, rollback and source-only boundaries.
+zero-class projection, exact byte preservation, retries, pinned-source refresh,
+missing-metadata retirement, collisions, rollback and source-only boundaries.
 Separate actual Java 21 checks verified the relative boot flag, the exact author
 patch, missing-file failure and native multiple-append behavior. A full client
 launch is still required after integrating the data; these checks do not claim

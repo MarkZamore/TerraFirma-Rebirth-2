@@ -14,7 +14,7 @@ def client(root,raw,version='1.21.1',duplicate=False):
         if raw is not None:
             archive.writestr('version.json',raw)
             if duplicate:archive.writestr('version.json',raw)
-    (root/'portable-pack.json').write_text(json.dumps({'schemaVersion':1,'minecraftVersion':version,'clientJar':'client.jar','loader':{'type':'neoforge','version':'native'}}))
+    (root/'portable-pack.json').write_text(json.dumps({'schemaVersion':1,'minecraftVersion':version,'clientJar':'client.jar','loader':{'type':'neoforge','version':'21.1.248'}}))
     lock_path=root/'tools/upstream-lock.json'
     lock=json.loads(lock_path.read_text()) if lock_path.exists() else {'schemaVersion':1,'authorFilesChanged':[],'supportFiles':[],'nativeAuthorField':'preserved'}
     lock['supportFiles']=[row for row in lock['supportFiles'] if row['path']!='client.jar']
@@ -49,12 +49,14 @@ class SourceMetadataTests(unittest.TestCase):
             self.assertEqual(before,snapshot(root));self.assertEqual(report['changedPaths'],[])
             run=subprocess.run([sys.executable,'-B',str(Path(p.__file__).resolve()),'--pack',str(root),'--check'],capture_output=True)
             self.assertEqual(run.returncode,0,run.stderr);self.assertEqual(before,snapshot(root))
-    def test_future_native_version_regenerates_without_version_table(self):
+    def test_refreshed_pinned_native_metadata_is_copied_exactly(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory);fixture(root);plan,_=p.prepare(root);p.apply(root,plan)
-            client(root,native('26.3',777,5023),'26.3');plan,report=p.prepare(root);p.apply(root,plan)
-            self.assertEqual(report['minecraftVersion'],'26.3');self.assertEqual(report['protocolVersion'],777)
-            with zipfile.ZipFile(root/p.OUTPUT) as archive:self.assertEqual(archive.read('version.json'),native('26.3',777,5023))
+            # Synthetic repinned bytes test copying, not a native protocol claim.
+            refreshed=native(protocol=768,world=3956)
+            client(root,refreshed);plan,report=p.prepare(root);p.apply(root,plan)
+            self.assertEqual(report['minecraftVersion'],'1.21.1');self.assertEqual(report['protocolVersion'],768)
+            with zipfile.ZipFile(root/p.OUTPUT) as archive:self.assertEqual(archive.read('version.json'),refreshed)
     def test_unverified_source_and_wrong_native_id_are_rejected(self):
         for wrong in ('hash','id','boolean','duplicate-property','oversize'):
             with self.subTest(wrong=wrong),tempfile.TemporaryDirectory() as directory:
@@ -77,10 +79,10 @@ class SourceMetadataTests(unittest.TestCase):
             root=Path(directory);fixture(root);(root/'config').mkdir();(root/p.OUTPUT).write_bytes(b'author data collision')
             with self.assertRaises(ValueError):p.prepare(root)
             self.assertEqual((root/p.OUTPUT).read_bytes(),b'author data collision')
-    def test_old_native_client_without_metadata_retires_only_owned_projection(self):
+    def test_missing_native_metadata_retires_only_owned_projection(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory);fixture(root);plan,_=p.prepare(root);p.apply(root,plan)
-            client(root,None,'1.12.2');plan,report=p.prepare(root);p.apply(root,plan)
+            client(root,None);plan,report=p.prepare(root);p.apply(root,plan)
             self.assertEqual(report['status'],'NO_NATIVE_METADATA');self.assertFalse((root/p.OUTPUT).exists())
             self.assertNotIn(p.FLAG,(root/p.FLAGS).read_text(encoding='utf-8-sig'))
             self.assertIn('-Xbootclasspath/a:author-resource.jar',(root/p.FLAGS).read_text(encoding='utf-8-sig'))
