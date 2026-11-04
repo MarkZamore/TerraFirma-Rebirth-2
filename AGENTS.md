@@ -13,3 +13,12 @@
 - При авторском импорте сохранить source-owned слой 	ools/waypoint_source_policy.py, 	ools/journeymap-waypoints-policy.json, 	ools/client-policy/scripts/lanmc_journeymap_waypoint_policy.js и его точную runtime-копию под kubejs/startup_scripts/. После импорта выполнить prepare --pack . --apply, затем erify --pack .; generator и verify-only остаются read-only.
 - Для новой версии JourneyMap/KubeJS/Rhino повторно проверить API и настоящие KubeJS type wrappers, обновить точные pins и native proof. Не расширять ClassFilter и не обходить gate.
 - В launcher/pack-owned.txt принадлежит только точный путь этого скрипта, без kubejs/**. Авторские файлы не меняются; support-lock содержит единственную новую runtime-копию. Личные карты и миры в поставку не входят, метки не очищаются по эвристике даты.
+
+
+## Отрисовка рук Intel без шейдеров
+
+- При авторском импорте сохранять `tools/hand_depth_policy.py`, `tools/hand-depth-policy.json`, `tools/hand-depth/`, `tools/client-policy/scripts/lanmc_intel_hand_depth.js` и точную runtime-копию `kubejs/startup_scripts/lanmc_intel_hand_depth.js`. Не заменять репозиторий целиком авторским экспортом.
+- После импорта в независимой исходной копии выполнить `python -B tools/hand_depth_policy.py prepare --pack . --apply`, затем `python -B tools/hand_depth_policy.py verify --pack .`. Подготовка восстанавливает только проверенный слой и его точное ownership; остальные авторские и личные файлы не подменять.
+- Minecraft, NeoForge, Sable и вложенный Veil, KubeJS, Rhino привязаны к точным pins. При изменении платформы или любого из этих JAR повторить native API и игровой прогон на затронутом GPU: пустая рука, обе руки с предметами, выключенные/включённые шейдеры и повторный вход. Только после проверки явно актуализировать профиль и pins; неизвестную версию не принимать автоматически.
+- Генератор, verify-only и публикация вызывают read-only verify до упаковки. Не вызывать prepare из работающего лаунчера и не отключать guard. Отсутствующий слой или несовпадающие pins должны остановить публикацию.
+- Ownership только точного startup-скрипта, без `kubejs/**`. Авторские JAR, scripts/resources, механики, stencil и свет не отключать. Скрипт повторяет только штатную очистку depth связанного first-person framebuffer на Intel, один раз перед первой рукой кадра; обработчики и рендер обеих рук остаются штатными.

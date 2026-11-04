@@ -26,8 +26,8 @@ def prepare_logging_fixture(pack):
 
 
 # These cases test asset verification/config projection. The independent native
-# waypoint policy is covered strictly by test_waypoint_source_policy.py; keep
-# the production CLI and its logging gate real, isolating only this dependency.
+# waypoint and hand-depth policies have their own import/gate tests; keep
+# the production CLI and its logging gate real, isolating these dependencies.
 ASSET_CLI_RUNNER = """
 from pathlib import Path
 import runpy
@@ -36,9 +36,10 @@ from unittest.mock import patch
 script = sys.argv.pop(1)
 sys.argv[0] = script
 sys.path.insert(0, str(Path(script).resolve().parent))
-with patch('waypoint_source_policy.verify') as native_waypoint_gate:
+with patch('waypoint_source_policy.verify') as native_waypoint_gate, patch('hand_depth_policy.verify') as hand_depth_gate:
     runpy.run_path(script, run_name='__main__')
     native_waypoint_gate.assert_called_once()
+    hand_depth_gate.assert_called_once()
 """
 
 
@@ -64,11 +65,12 @@ class ReleaseVerificationTests(unittest.TestCase):
                 b'# author v2\r\n[display]\r\ndoPopUpLogging = true # new default\r\nother = 19\r\nnewOption = "keep"\r\n']
             for version, raw in enumerate(authors):
                 config.write_bytes(raw)
-                with patch('generate_manifest.waypoint_source_policy.verify') as native_waypoint_gate:
+                with patch('generate_manifest.waypoint_source_policy.verify') as native_waypoint_gate, patch('generate_manifest.hand_depth_policy.verify') as hand_depth_gate:
                     with contextlib.redirect_stdout(io.StringIO()):
                         generate(pack, out, 'author-' + str(version))
                         verify_only(out, verify_all=True)
                     native_waypoint_gate.assert_called_once_with(pack)
+                    hand_depth_gate.assert_called_once_with(pack)
                 manifest = json.loads((out / 'pack-manifest.json').read_text(encoding='utf-8'))
                 row = next(row for row in manifest['files'] if row['path'] == relative)
                 asset = next(row for row in manifest['assets'] if relative in row['covers'])

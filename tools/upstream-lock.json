@@ -66,8 +66,8 @@
     },
     {
       "path": "launcher/pack-owned.txt",
-      "sizeBytes": 355,
-      "sha256": "53976f48e87caa1fe1ac6e7e8dd02876aa4d16dec4fc9ee0b34c30efdc40cccf"
+      "sizeBytes": 405,
+      "sha256": "3d2a99392bda3093348063b9a3391b7e63ee9b9e00e1db79a479169260a18062"
     },
     {
       "path": "launcher/controls-preset.txt",
@@ -99,6 +99,13 @@
       "sha256": "720906f4e452f2124628fcc244a0b03b52c1157cd79a73a2803a212042709479",
       "kind": "pack-owned-startup-script",
       "reason": "Singleplayer waypoint generation association; source-owned layer, no author JAR/config changes and no map/world data bundled."
+    },
+    {
+      "path": "kubejs/startup_scripts/lanmc_intel_hand_depth.js",
+      "kind": "pack-owned-startup-script",
+      "reason": "Intel first-person depth compatibility; original author JARs and mechanics retained.",
+      "sizeBytes": 2774,
+      "sha256": "df2f1ee9d6fd2fe0905968aa26e632724d646704a04d29496cd3dc6d7f584e8b"
     }
   ],
   "originalManifest": {

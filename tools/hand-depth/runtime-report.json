@@ -1,0 +1,183 @@
+{
+  "schemaVersion": 1,
+  "kind": "intel-first-person-depth-compatibility-evidence",
+  "sourceBaseCommit": "422bd3ed0c84a29ffb0672965ab4ba03b71d8ad4",
+  "platform": {
+    "type": "neoforge",
+    "version": "21.1.248"
+  },
+  "minecraftVersion": "1.21.1",
+  "gpu": {
+    "renderer": "Intel(R) Arc(TM) B390 GPU",
+    "openGL": "4.6.0",
+    "driver": "32.0.101.8724"
+  },
+  "productionScriptSha256": "df2f1ee9d6fd2fe0905968aa26e632724d646704a04d29496cd3dc6d7f584e8b",
+  "nativeReproduction": {
+    "isolatedContext": true,
+    "framebufferFormat": "DEPTH32F_STENCIL8",
+    "namedClearWhileTargetUnbound": {
+      "requested": 1.0,
+      "observed": 0.25,
+      "repeatedTrials": 3,
+      "glError": 0
+    },
+    "boundClear": {
+      "requested": 1.0,
+      "observed": 1.0,
+      "repeatedTrials": 3
+    },
+    "otherFramebufferDepthPreserved": 0.75,
+    "depthWriteDisabledNegativeCasePreserved": true,
+    "privateTranscriptSha256": "0c614fdfbeacd4fb08c2a074fd18734a443e3695489faa82f193ac1e2c2ee5c0",
+    "source": "tools/hand-depth/native/IntelDepthClearProbe.java"
+  },
+  "fullClient": {
+    "independentFixture": true,
+    "originalAuthorFilesVerified": 2913,
+    "originalAuthorJarsVerified": 222,
+    "personalWorldsCopied": false,
+    "personalSettingsCopied": false,
+    "exactFinalScriptLoadedInNativeRhino": true,
+    "nativeCallbackActivated": true,
+    "nativeTfcWorldCreated": true,
+    "nativeTfcGeneratorObserved": true,
+    "shaderChoice": "author default enableShaders=false",
+    "scriptErrors": 0,
+    "classTransformersInFix": false,
+    "diagnosticAgentsInDistribution": false
+  },
+  "visibilityAcceptance": {
+    "authority": "user",
+    "confirmation": "Все отображается, фиксируй",
+    "userAcceptedRendering": true,
+    "independentFullEmptyBothHandsAndReentrySequenceClaimed": false,
+    "note": "Computer-use was interrupted before the complete independent visibility/re-entry sequence. Publication followed the user confirmation; synthetic re-entry/both-hand tests do not claim a two-client LAN visual PASS."
+  },
+  "automatedChecks": {
+    "pythonToolsTests": 84,
+    "actualTemplateContractCases": 15,
+    "sourceStockVerification": "PASS",
+    "nativeControlsMappings": 216,
+    "newRegistryIds": 0
+  },
+  "remainingErrors": [
+    {
+      "thread": "Render thread",
+      "logger": "KubeJS/",
+      "count": 6
+    },
+    {
+      "thread": "Render thread",
+      "logger": "ModernUI-MC/",
+      "count": 1
+    },
+    {
+      "thread": "Render thread",
+      "logger": "Moonlight/",
+      "count": 1
+    },
+    {
+      "thread": "Render thread",
+      "logger": "Tips/",
+      "count": 30
+    },
+    {
+      "thread": "Render thread",
+      "logger": "Veil/",
+      "count": 1
+    },
+    {
+      "thread": "Render thread",
+      "logger": "dev.ryanhcode.sable.Sable/",
+      "count": 1
+    },
+    {
+      "thread": "Render thread",
+      "logger": "mezz.jei.library.load.registration.SubtypeRegistration/",
+      "count": 2
+    },
+    {
+      "thread": "Render thread",
+      "logger": "mezz.jei.library.plugins.vanilla.ingredients.ItemStackListFactory/",
+      "count": 43
+    },
+    {
+      "thread": "Render thread",
+      "logger": "net.dries007.tfc.TerraFirmaCraft/",
+      "count": 12
+    },
+    {
+      "thread": "Render thread",
+      "logger": "net.dries007.tfc.compat.patchouli.component.CustomComponent/",
+      "count": 7
+    },
+    {
+      "thread": "Render thread",
+      "logger": "net.minecraft.world.item.crafting.RecipeManager/",
+      "count": 24
+    },
+    {
+      "thread": "Render thread",
+      "logger": "net.neoforged.neoforge.registries.DataMapLoader/",
+      "count": 1
+    },
+    {
+      "thread": "Server thread",
+      "logger": "dev.ryanhcode.sable.Sable/",
+      "count": 5
+    },
+    {
+      "thread": "Worker-Main-10",
+      "logger": "net.minecraft.client.resources.model.ModelManager/",
+      "count": 1
+    },
+    {
+      "thread": "Worker-Main-2",
+      "logger": "net.minecraft.tags.TagLoader/",
+      "count": 2
+    },
+    {
+      "thread": "Worker-Main-3",
+      "logger": "net.minecraft.tags.TagLoader/",
+      "count": 4
+    },
+    {
+      "thread": "Worker-Main-8",
+      "logger": "net.minecraft.world.level.storage.loot.LootDataType/",
+      "count": 22
+    },
+    {
+      "thread": "main",
+      "logger": "mixin",
+      "count": 1
+    },
+    {
+      "thread": "main",
+      "logger": "net.neoforged.fml.loading.moddiscovery.ModFile",
+      "count": 3
+    },
+    {
+      "thread": "modloading-worker-0",
+      "logger": "net.neoforged.fml.common.asm.RuntimeDistCleaner/DISTXFORM",
+      "count": 14
+    },
+    {
+      "thread": "pool-28-thread-1",
+      "logger": "me.molybdenum.ambience_mini.v1_21_1.AmbienceMini/",
+      "count": 1
+    },
+    {
+      "thread": "pool-61-thread-1",
+      "logger": "me.molybdenum.ambience_mini.v1_21_1.AmbienceMini/",
+      "count": 1
+    }
+  ],
+  "limits": [
+    "Full effects/shader correctness and a separate two-client LAN visual acceptance are not claimed.",
+    "Known author Veil compute-shader, resource/recipe and shutdown-audio messages are not suppressed or declared fixed.",
+    "New platform/Sable/embedded Veil/KubeJS/Rhino bytes require new review and pins."
+  ],
+  "safetyReview": "Only a client framebuffer depth clear; no world/entity/inventory/claim/permission mutation. No ATM9 Safety transfer.",
+  "launcherExceptions": []
+}

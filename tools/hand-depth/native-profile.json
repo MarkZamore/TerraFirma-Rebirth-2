@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "kind": "exact-source-api-identity",
+  "runtimeAcceptanceClaimed": false,
+  "platform": {
+    "minecraftVersion": "1.21.1",
+    "loader": {
+      "type": "neoforge",
+      "version": "21.1.248"
+    }
+  },
+  "nativeModules": [
+    {
+      "path": "mods/sable-neoforge-1.21.1-2.0.5.jar",
+      "sizeBytes": 12986136,
+      "sha256": "c8710f85bc780bbf523e6726ceaaf76dd0b8c61479db497b382c6bb34317e7ab",
+      "modId": "sable"
+    },
+    {
+      "path": "mods/kubejs-neoforge-2101.7.2-build.368.jar",
+      "sizeBytes": 2281720,
+      "sha256": "28867299e7a9f02cfd74e34745fdbbb073fe4887fddbc98fd6c1ed2e87b01482",
+      "modId": "kubejs"
+    },
+    {
+      "path": "mods/rhino-2101.2.8-build.91.jar",
+      "sizeBytes": 980936,
+      "sha256": "1d53d962aa4dac54bcbb4f998c1845980cf194318f1d6b1580ea6ac15cce5ef3",
+      "modId": "rhino"
+    }
+  ],
+  "bundledVeil": {
+    "modId": "veil",
+    "parentModId": "sable",
+    "entry": "META-INF/jarjar/veil-neoforge-1.21.1-4.3.2.jar",
+    "sizeBytes": 3359227,
+    "sha256": "774b83887d882dc47cd4d29d140cef0c8677747a6fe7799649f490926a4e0265"
+  },
+  "publicApiSites": [
+    "NativeEvents.onEvent(EventPriority,ClassOrString,Consumer)",
+    "net.neoforged.neoforge.client.event.RenderFrameEvent$Pre",
+    "net.neoforged.neoforge.client.event.RenderHandEvent",
+    "foundry.veil.api.client.render.VeilRenderSystem.renderer()",
+    "foundry.veil.api.client.render.framebuffer.FramebufferManager.getFramebuffer(ResourceLocation)",
+    "foundry.veil.api.client.render.framebuffer.VeilFramebuffers.FIRST_PERSON",
+    "foundry.veil.api.client.render.framebuffer.AdvancedFbo.getId()/getDepthTextureAttachment()",
+    "org.lwjgl.opengl.GL11C.glGetString(int)/glGetInteger(int)/glGetBoolean(int)/glGetDouble(int)",
+    "com.mojang.blaze3d.systems.RenderSystem.clear(int,boolean)/clearDepth(double)",
+    "org.lwjgl.opengl.GL45C.glGetTextureLevelParameteri(int,int,int)"
+  ],
+  "scope": "This is an exact source/API identity profile. It is not a claim of full client, GPU, hand visibility or world acceptance."
+}

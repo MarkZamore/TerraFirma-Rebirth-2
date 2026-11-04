@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "kind": "pack-owned-intel-first-person-depth-clear",
+  "platform": {
+    "minecraftVersion": "1.21.1",
+    "loader": {
+      "type": "neoforge",
+      "version": "21.1.248"
+    }
+  },
+  "script": {
+    "path": "kubejs/startup_scripts/lanmc_intel_hand_depth.js",
+    "sizeBytes": 2774,
+    "sha256": "df2f1ee9d6fd2fe0905968aa26e632724d646704a04d29496cd3dc6d7f584e8b",
+    "template": "tools/client-policy/scripts/lanmc_intel_hand_depth.js"
+  },
+  "nativeModules": [
+    {
+      "path": "mods/sable-neoforge-1.21.1-2.0.5.jar",
+      "sizeBytes": 12986136,
+      "sha256": "c8710f85bc780bbf523e6726ceaaf76dd0b8c61479db497b382c6bb34317e7ab",
+      "modId": "sable"
+    },
+    {
+      "path": "mods/kubejs-neoforge-2101.7.2-build.368.jar",
+      "sizeBytes": 2281720,
+      "sha256": "28867299e7a9f02cfd74e34745fdbbb073fe4887fddbc98fd6c1ed2e87b01482",
+      "modId": "kubejs"
+    },
+    {
+      "path": "mods/rhino-2101.2.8-build.91.jar",
+      "sizeBytes": 980936,
+      "sha256": "1d53d962aa4dac54bcbb4f998c1845980cf194318f1d6b1580ea6ac15cce5ef3",
+      "modId": "rhino"
+    }
+  ],
+  "bundledVeil": {
+    "modId": "veil",
+    "parentModId": "sable",
+    "entry": "META-INF/jarjar/veil-neoforge-1.21.1-4.3.2.jar",
+    "sizeBytes": 3359227,
+    "sha256": "774b83887d882dc47cd4d29d140cef0c8677747a6fe7799649f490926a4e0265"
+  },
+  "nativeProfile": {
+    "path": "tools/hand-depth/native-profile.json",
+    "sizeBytes": 2115,
+    "sha256": "52d231db49e3dc6980b0656c6908057c2b5abdaa0ebc7019e8dcfd05fb126f7f"
+  },
+  "sourceOnlyVerifier": "tools/hand_depth_policy.py",
+  "previousOwnedScripts": [],
+  "runtimeScope": "Before the first RenderHandEvent per frame, only Intel and the bound Veil first-person target whose actual depth texture internal format is DEPTH32F_STENCIL8, with depth writes enabled and scissor disabled. Query actual texture format each frame, including dynamic wrappers and ID reuse. Repeat depth clear through the native bound-target API; preserve stencil and clear-depth state.",
+  "safetyReview": "Client framebuffer depth only. No world, block, entity, inventory, claim, permission or deferred server-world mutations. ATM9 Safety is not installed or changed.",
+  "preserved": [
+    "all author JAR bytes",
+    "all author scripts/resources/recipes/quests",
+    "personal video options and shader choice",
+    "Veil first-person lighting/stencil pipeline",
+    "launcher code and EXE",
+    "registry IDs/world data"
+  ],
+  "updateRule": "Keep this source-owned layer during manual author import. Prepare/verify refuses new platform or native source bytes until independently reviewed pins and native-profile are updated. Publication must invoke read-only verify unconditionally."
+}
