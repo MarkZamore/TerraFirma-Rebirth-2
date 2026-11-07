@@ -50,6 +50,9 @@ jobs:
           python -B tools/verify_author_stock.py
           python -B -m unittest discover -s tools -p 'test_*.py'
 
+      - name: Verify mandatory Steam-only public server delivery policy
+        run: python -B tools/public_server_policy.py verify --pack .
+
       - name: Check the controls preset
         if: ${{ hashFiles('launcher/controls-preset.txt') != '' }}
         run: |

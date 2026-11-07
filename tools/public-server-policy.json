@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "reviewedInputSha256": "1d3836580762efb543697b25326a321e956c921b63455f35ce1c5e094d64d9f7",
+  "reviewedInputSha256": "97db4db83a89590248a42767d392c59544cc03ca7d330148efbf1c707ede9f4b",
   "activeRevision": "465cd2d4e0258d9a64e7f101cb1b6aa2908fa102",
   "activeManifestSha256": "df4041c8deb6d8eb389c43c041f9f8302cb5ceac9bc1e828728b1617f11814ce",
   "serverSeedShipped": false,
@@ -24,5 +24,20 @@
   },
   "scope": "Static delivery and native bytecode audit. Personal server list read-only, no player entries deleted. Steam discovery and manual joins remain managed by their existing mechanisms.",
   "updateRule": "Any changed covered delivery input fails publication until the author menu, seed lists and native server-list hooks are explicitly re-audited. Never auto-freeze this pin.",
-  "gameplayRun": "NOT RUN: waived by user"
+  "gameplayRun": "NOT RUN: waived by user",
+  "coveredRoots": [
+    "mods",
+    "config",
+    "kubejs",
+    "scripts",
+    "defaultconfigs",
+    "data",
+    "resourcepacks",
+    "shaderpacks",
+    "configureddefaults",
+    "launcher",
+    "ambience_music",
+    "global_packs",
+    "journeymap"
+  ]
 }
