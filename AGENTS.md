@@ -1,5 +1,10 @@
 # Подготовка исходников сборки
 
+## Публичные серверы
+
+- `servers.dat` автора хранится только в исходном stock snapshot. Не включать его или seed server list в runtime, не менять личные записи игрока или Steam-discovery.
+- Генератор и verify-all вызывают `public_server_policy.verify`. При импорте автора сохранять `tools/public_server_policy.py` и независимый pin `tools/public-server-policy.json`. Изменение проверенных mods/config/scripts требует адресного повторного аудита автоматических рекомендаций, действий меню и прямого подключения перед явным обновлением pin. Автоматически пересчитывать pin при импорте или публикации нельзя.
+
 ## Метки игроков хоста и миграция конфигурации LSS
 
 - При импорте авторского обновления сохранять `tools/host_compatibility_policy.py`, `tools/host-compatibility-policy.json`, шаблоны `lanmc_journeymap_player_markers.js` и `lanmc_lss_config_migration.js` под `tools/client-policy/scripts/`, их runtime-копии под `kubejs/startup_scripts/` и соответствующие точные строки ownership.
