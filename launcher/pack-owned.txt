@@ -6,3 +6,5 @@ config/native-version-metadata.jar
 config/log4j2.xml
 kubejs/startup_scripts/lanmc_journeymap_waypoint_policy.js
 kubejs/startup_scripts/lanmc_intel_hand_depth.js
+kubejs/startup_scripts/lanmc_journeymap_player_markers.js
+kubejs/startup_scripts/lanmc_lss_config_migration.js

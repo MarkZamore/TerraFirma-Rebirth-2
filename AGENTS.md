@@ -1,5 +1,12 @@
 # Подготовка исходников сборки
 
+## Метки игроков хоста и миграция конфигурации LSS
+
+- При импорте авторского обновления сохранять `tools/host_compatibility_policy.py`, `tools/host-compatibility-policy.json`, шаблоны `lanmc_journeymap_player_markers.js` и `lanmc_lss_config_migration.js` под `tools/client-policy/scripts/`, их runtime-копии под `kubejs/startup_scripts/` и соответствующие точные строки ownership.
+- В независимой исходной копии выполнить `python -B tools/host_compatibility_policy.py prepare --pack . --apply`, затем `verify --pack .`. Генератор и CI вызывают только read-only verify. Не принимать новые версии JourneyMap, LSS, KubeJS, Rhino или платформы без повторного разбора API, проверки миграции и игрового прогона. Новые pins в receipt утверждаются явно после проверки.
+- Метки изменяются только в памяти клиента встроенного сервера через публичный JourneyMap API. Сохранённые точки, изображения карты, дальние записи и правила видимости остаются под управлением JourneyMap.
+- Миграция LSS переносит совместимые старые параметры VSS в штатные поля LSS. Сохранять однократный receipt экземпляра и последующий личный выбор. Не вводить собственные пределы дальности или качества и не переносить настройки через C# лаунчера.
+
 ## Сохранение диагностики при обновлениях автора
 
 - После переноса новых авторских файлов сохранять pack-owned слой: `config/log4j2.xml`, `launcher/jvm-args.txt`, `launcher/pack-owned.txt`, `tools/network_logging_policy.py`, `tools/network-logging-policy.json`. Не заменять весь репозиторий одним авторским экспортом.

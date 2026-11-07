@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "platform": {
+    "minecraftVersion": "1.21.1",
+    "loader": {
+      "type": "neoforge",
+      "version": "21.1.248"
+    }
+  },
+  "nativeModules": [
+    {
+      "path": "mods/journeymap-neoforge-1.21.1-6.0.3.jar",
+      "sizeBytes": 4156889,
+      "sha256": "d20006d674b577f352c813ac0864581597f38f03bdc8cbd4d1f2501cf95f3b0a",
+      "modId": "journeymap"
+    },
+    {
+      "path": "mods/lod-server-support-neoforge-0.14.0+1.21.1.jar",
+      "sizeBytes": 17500054,
+      "sha256": "ffcea086f319cb8562c9af44ad69f2239d620d809ecfcb58b9b1eeb4dbe3a3d4",
+      "modId": "lss"
+    },
+    {
+      "path": "mods/kubejs-neoforge-2101.7.2-build.368.jar",
+      "sizeBytes": 2281720,
+      "sha256": "28867299e7a9f02cfd74e34745fdbbb073fe4887fddbc98fd6c1ed2e87b01482",
+      "modId": "kubejs"
+    },
+    {
+      "path": "mods/rhino-2101.2.8-build.91.jar",
+      "sizeBytes": 980936,
+      "sha256": "1d53d962aa4dac54bcbb4f998c1845980cf194318f1d6b1580ea6ac15cce5ef3",
+      "modId": "rhino"
+    }
+  ],
+  "scripts": [
+    {
+      "path": "kubejs/startup_scripts/lanmc_journeymap_player_markers.js",
+      "sizeBytes": 2868,
+      "sha256": "96cfaff4bfdd8a4ed509a926fc2a9b298849e8ff2e1fa6f01701a0fe5c1d5593",
+      "template": "tools/client-policy/scripts/lanmc_journeymap_player_markers.js"
+    },
+    {
+      "path": "kubejs/startup_scripts/lanmc_lss_config_migration.js",
+      "sizeBytes": 9268,
+      "sha256": "ba15bdead62d609a88fabf3d1fca4644ff0e09e56e9606f20c6de34e8ef5eaea",
+      "template": "tools/client-policy/scripts/lanmc_lss_config_migration.js"
+    }
+  ],
+  "sourceOnlyVerifier": "tools/host_compatibility_policy.py",
+  "updateRule": "Preserve this source-owned layer on author imports. Reviewed new native pins and runtime acceptance are required before changing this receipt. Publication only verifies.",
+  "scope": [
+    "Integrated-host client JourneyMap existing visible player records and ephemeral player points only.",
+    "One-time migration of compatible author VSS pacing/cache fields to native LSS. Preserve subsequent personal choices with a local receipt."
+  ],
+  "preserved": [
+    "All author JAR and original config bytes",
+    "registry IDs, worlds, claims, gameplay",
+    "render/LOD/simulation distances and quality",
+    "personal maps and waypoints",
+    "launcher implementation"
+  ]
+}

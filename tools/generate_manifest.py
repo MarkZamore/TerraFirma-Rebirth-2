@@ -32,6 +32,7 @@ from pack_library import stage_library, verify_library
 import network_logging_policy
 import waypoint_source_policy
 import hand_depth_policy
+import host_compatibility_policy
 from config_overrides import project_configs, projection_report
 
 import argparse
@@ -217,6 +218,7 @@ def generate(pack: Path, out: Path, revision: str) -> None:
     network_logging_policy.verify(pack)
     waypoint_source_policy.verify(pack)
     hand_depth_policy.verify(pack)
+    host_compatibility_policy.verify(pack)
     portable = load_portable_pack(pack)
     client_jar = portable["clientJar"].replace("\\", "/")
     client_path = pack / Path(client_jar)
@@ -417,6 +419,7 @@ def main() -> None:
         network_logging_policy.verify(pack)
         waypoint_source_policy.verify(pack)
         hand_depth_policy.verify(pack)
+        host_compatibility_policy.verify(pack)
         verify_only(out, args.verify_all)
         return
 

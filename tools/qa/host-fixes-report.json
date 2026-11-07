@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "sourceBaseCommit": "120d8b1",
+  "platform": {
+    "minecraftVersion": "1.21.1",
+    "neoForgeVersion": "21.1.248",
+    "java": "Temurin 21.0.12.1+1"
+  },
+  "authorFidelity": {
+    "verifiedOriginalFiles": 2913,
+    "verifiedOriginalJars": 222,
+    "modifiedAuthorFiles": 0,
+    "removedAuthorJars": 0,
+    "newRegistryIds": 0
+  },
+  "diagnosis": {
+    "hostServerLagObservedMs": [2005, 8658, 2000, 2018, 6456],
+    "entireLagAttributedToLss": false,
+    "lssSchemaMismatchConfirmed": true,
+    "journeyMapStaleObjectCacheConfirmedByBytecode": true,
+    "naturalHostOnlyMarkerTriggerReproduced": false,
+    "note": "Roxy rebuild messages are correlated activity, not sufficient evidence of a Roxy defect. The repaired LSS settings restore the author's lost pacing/cache intent."
+  },
+  "automatedChecks": {
+    "pythonSuite": "PASS: 86 tests",
+    "actualMarkerScriptBehavior": "PASS: integrated host, guest isolation, movement, visibility, distant records, same-count object replacement, departure and re-entry",
+    "lssMigration": "PASS: 16 scenarios, including interrupted saves, personal choices and path aliases",
+    "pinnedRhinoStartupWrapper": "PASS",
+    "sourcePublicationGates": "PASS"
+  },
+  "independentClient": {
+    "personalWorldsCopied": false,
+    "personalSettingsCopied": false,
+    "runtimeLibrariesVerified": 106,
+    "mainMenuReached": true,
+    "newWorldFormReached": true,
+    "startupScriptsLoaded": "11/11",
+    "startupScriptErrors": 0,
+    "nativeLssMigration": "PASS",
+    "effectiveConfig": {
+      "mbPerSecondLimitGlobal": 0.95367431640625,
+      "maxConcurrentDiskReads": 2,
+      "lodStore": "on",
+      "lodStoreMaxMB": 1024,
+      "lodStoreBackfill": false,
+      "lodDistanceChunks": 128,
+      "enableChunkGeneration": true,
+      "generationConcurrencyLimitGlobal": 32,
+      "generationConcurrencyLimitPerPlayer": 4
+    },
+    "worldAndTwoClientGameplay": "NOT RUN: user stopped computer use and explicitly waived the gameplay run",
+    "nativeSyntheticMarkerProbe": "NOT RUN: requires entering a world",
+    "latencyBeforeAfterGameplay": "NOT RUN: waived gameplay run",
+    "normalGameExit": "NOT RUN: owned QA process stopped after the user's interruption",
+    "firstAttempt": "Found a Rhino block-function binding difference. Corrected it and repeated the native startup successfully."
+  },
+  "launcherChanges": [],
+  "officialLssConfigSource": "https://github.com/VoX/lod-server-support/blob/v0.14.0/common/src/main/java/dev/vox/lss/common/config/ServerConfigBase.java"
+}

@@ -66,8 +66,8 @@
     },
     {
       "path": "launcher/pack-owned.txt",
-      "sizeBytes": 405,
-      "sha256": "3d2a99392bda3093348063b9a3391b7e63ee9b9e00e1db79a479169260a18062"
+      "sizeBytes": 508,
+      "sha256": "a8b7717e3a65f3599d4093feb772d7cee40a90e6b608e0371d4bb32788484a9e"
     },
     {
       "path": "launcher/controls-preset.txt",
@@ -106,6 +106,20 @@
       "reason": "Intel first-person depth compatibility; original author JARs and mechanics retained.",
       "sizeBytes": 2774,
       "sha256": "df2f1ee9d6fd2fe0905968aa26e632724d646704a04d29496cd3dc6d7f584e8b"
+    },
+    {
+      "path": "kubejs/startup_scripts/lanmc_journeymap_player_markers.js",
+      "sizeBytes": 2868,
+      "sha256": "96cfaff4bfdd8a4ed509a926fc2a9b298849e8ff2e1fa6f01701a0fe5c1d5593",
+      "kind": "pack-owned-startup-script",
+      "reason": "Native JourneyMap player tracking and LSS author-config compatibility."
+    },
+    {
+      "path": "kubejs/startup_scripts/lanmc_lss_config_migration.js",
+      "sizeBytes": 9268,
+      "sha256": "ba15bdead62d609a88fabf3d1fca4644ff0e09e56e9606f20c6de34e8ef5eaea",
+      "kind": "pack-owned-startup-script",
+      "reason": "Native JourneyMap player tracking and LSS author-config compatibility."
     }
   ],
   "originalManifest": {
