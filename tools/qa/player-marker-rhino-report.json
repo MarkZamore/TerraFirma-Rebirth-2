@@ -24,5 +24,13 @@
     "gameplay": "NOT RUN: user's gameplay waiver remains in force"
   },
   "originalFreezeOrigin": "Still not attributed conclusively. The original symptom predates our broken compatibility handler.",
-  "authorUpdateProtection": "Exact script/module pins, source-owned template and runtime copy, unconditional publication verification, mandatory Rhino regression check. Unknown author versions require review."
+  "authorUpdateProtection": "Exact script/module pins, source-owned template and runtime copy, unconditional publication verification, mandatory Rhino regression check. Unknown author versions require review.",
+  "publishedVerification": {
+    "status": "PASS",
+    "revision": "fdc70e471e740f3983ab8cfee5fac7915599b9ba",
+    "scriptSha256": "017875dfba03a97eee31c9dbce286c1c61dff8e81529544dacf58b0a44c4fc1a",
+    "archiveSha256": "24f564d873c49129a5dd4bd8858ea619026de0b5f08fad4e2af05cdcd5ed3565",
+    "downloadedArchiveMatchesSource": true,
+    "workflow": "https://github.com/MarkZamore/TerraFirma-Rebirth-2/actions/runs/42481177494"
+  }
 }
