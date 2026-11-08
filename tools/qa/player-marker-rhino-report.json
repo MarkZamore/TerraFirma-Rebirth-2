@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "sourceBaseCommit": "156abc82312a4540d386d0b03e832bb876259bb2",
+  "observedInHostLog": {
+    "date": "2026-11-08",
+    "time": "17:19:08.529",
+    "error": "JourneyMap integrated-host player marker compatibility failed: TypeError: Cannot call property players in object ClientLevel. It is not a function, it is object.",
+    "effect": "The host-only compatibility handler disables itself after the error for the rest of that game launch.",
+    "ownership": "Our pack-owned compatibility script, not an author JAR modification"
+  },
+  "repair": {
+    "oldAccess": "mc.level.players().iterator()",
+    "newAccess": "mc.level.players.iterator()",
+    "scope": "Use the KubeJS collection property already observed in the host log; retain visibility, cache and guest guards.",
+    "authorJarsChanged": 0,
+    "launcherChanges": 0
+  },
+  "checks": {
+    "actualProductionScriptInNode": "PASS",
+    "pinnedRhinoJavaCollectionBinding": "PASS: old failure reproduced, host movement, same-count replacement, guest path and re-entry",
+    "rhinoVersion": "2101.2.8-build.91",
+    "javaVersion": "Temurin 21.0.12.1+1",
+    "fixtureBoundary": "The Rhino check models the observed KubeJS collection property using actual Java members and List interop. It does not instantiate a real Minecraft ClientLevel.",
+    "gameplay": "NOT RUN: user's gameplay waiver remains in force"
+  },
+  "originalFreezeOrigin": "Still not attributed conclusively. The original symptom predates our broken compatibility handler.",
+  "authorUpdateProtection": "Exact script/module pins, source-owned template and runtime copy, unconditional publication verification, mandatory Rhino regression check. Unknown author versions require review."
+}

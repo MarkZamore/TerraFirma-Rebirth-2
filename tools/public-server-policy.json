@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "reviewedInputSha256": "97db4db83a89590248a42767d392c59544cc03ca7d330148efbf1c707ede9f4b",
+  "reviewedInputSha256": "9685b38d0b74bd8cf45790b977ce3e4cd899b8121a11083bf087100769bac9e8",
   "activeRevision": "465cd2d4e0258d9a64e7f101cb1b6aa2908fa102",
   "activeManifestSha256": "df4041c8deb6d8eb389c43c041f9f8302cb5ceac9bc1e828728b1617f11814ce",
   "serverSeedShipped": false,
@@ -39,5 +39,6 @@
     "ambience_music",
     "global_packs",
     "journeymap"
-  ]
+  ],
+  "reviewUpdateReason": "Reviewed host marker delta only: use the KubeJS collection property instead of invoking it. No server seeding, menu action, native mod or other delivered input changed."
 }

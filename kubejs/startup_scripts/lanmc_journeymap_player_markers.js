@@ -21,7 +21,8 @@ if (Platform.isClientEnvironment() && Platform.isLoaded('journeymap')) {
       try {
         var radar = PlayerRadarManager.getInstance();
         var players = radar.getPlayers();
-        var livePlayers = mc.level.players().iterator();
+        // KubeJS exposes players as a collection property, not a callable.
+        var livePlayers = mc.level.players.iterator();
         while (livePlayers.hasNext()) {
           var player = livePlayers.next();
           var uuid = player.getUUID();

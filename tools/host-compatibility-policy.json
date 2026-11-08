@@ -36,8 +36,8 @@
   "scripts": [
     {
       "path": "kubejs/startup_scripts/lanmc_journeymap_player_markers.js",
-      "sizeBytes": 2868,
-      "sha256": "96cfaff4bfdd8a4ed509a926fc2a9b298849e8ff2e1fa6f01701a0fe5c1d5593",
+      "sizeBytes": 2942,
+      "sha256": "017875dfba03a97eee31c9dbce286c1c61dff8e81529544dacf58b0a44c4fc1a",
       "template": "tools/client-policy/scripts/lanmc_journeymap_player_markers.js"
     },
     {

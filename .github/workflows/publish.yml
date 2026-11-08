@@ -45,6 +45,9 @@ jobs:
       - name: Verify preserved host compatibility layers
         run: python -B tools/host_compatibility_policy.py verify --pack .
 
+      - name: Check actual player-marker script in pinned Rhino
+        run: python -B tools/qa/check_player_markers_rhino.py --java "$JAVA_HOME_21_X64/bin/java"
+
       - name: Verify complete author stock
         run: |
           python -B tools/verify_author_stock.py

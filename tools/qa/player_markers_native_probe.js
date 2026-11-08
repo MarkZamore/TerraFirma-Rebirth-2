@@ -86,7 +86,7 @@ if (Platform.isClientEnvironment() && Platform.isLoaded('journeymap')) {
         actual = ghost(100);
         actual.setId(id);
         level.addEntity(actual);
-        check(level.players().contains(actual), 'native ClientLevel tracks the synthetic RemotePlayer');
+        check(level.players.contains(actual), 'native ClientLevel tracks the synthetic RemotePlayer');
         radar.put(uuid, ghost(1));
         store.getPlayerPoints().clear();
         check(point().getX() === 1, 'baseline marker starts at original radar object');

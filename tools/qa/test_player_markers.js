@@ -43,7 +43,7 @@ function fixture({client = true, loaded = true, host = true} = {}) {
     savedWaypoints: ['base', 'home'],
   };
   const mc = {
-    level: {players: () => ({iterator: () => iterator(state.livePlayers)})},
+    level: {players: {iterator: () => iterator(state.livePlayers)}},
     player: local,
     hasSingleplayerServer: () => host,
   };
