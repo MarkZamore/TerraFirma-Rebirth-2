@@ -1,5 +1,10 @@
 # Подготовка исходников сборки
 
+## Предупреждение при входе в сетевую игру
+
+- После каждого авторского импорта выполнять `python -B tools/verify_author_stock.py --prepare-multiplayer-warning`. Эта подготовка восстанавливает штатное `skipMultiplayerWarning:true` для Minecraft 1.21.1 в поставляемом `configureddefaults/options.txt` из свежих авторских настроек. Корневой авторский `options.txt` и личные профили сохранять.
+- Обновлённые байты `configureddefaults/options.txt` закреплять в `supportFiles` файла `tools/upstream-lock.json` и включать в адресный обзор `tools/public-server-policy.json`. Проверки исходников, генерация и verify-all проверяют подготовленные байты без записи. При смене версии Minecraft сверить нативный экран и ключ до обновления правила.
+
 ## Публичные серверы
 
 - `servers.dat` автора хранится только в исходном stock snapshot. Не включать его или seed server list в runtime, не менять личные записи игрока или Steam-discovery.

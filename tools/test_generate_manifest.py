@@ -14,6 +14,7 @@ import zipfile
 
 from generate_manifest import generate, verify_only
 from network_logging_policy import prepare
+from verify_author_stock import prepare_multiplayer_warning
 
 
 def prepare_logging_fixture(pack):
@@ -23,6 +24,7 @@ def prepare_logging_fixture(pack):
     logging.parent.mkdir(parents=True, exist_ok=True)
     logging.write_bytes((Path(__file__).resolve().parent.parent / 'config/log4j2.xml').read_bytes())
     prepare(pack)
+    prepare_multiplayer_warning(pack)
 
 
 # These cases test asset verification/config projection. The independent native
@@ -114,6 +116,18 @@ class ReleaseVerificationTests(unittest.TestCase):
             self.assertEqual(0, passed.returncode, passed.stdout + passed.stderr)
             self.assertIn('verified 11 of 11 staged assets', passed.stdout)
             self.assertEqual(original_manifest, manifest.read_bytes())
+            options = pack / 'configureddefaults/options.txt'
+            saved_options = options.read_bytes()
+            options.unlink()
+            for bad_value in (None, b'skipMultiplayerWarning:false\n'):
+                if bad_value is not None:
+                    options.write_bytes(bad_value)
+                failed = subprocess.run(command, capture_output=True, text=True, timeout=30)
+                self.assertNotEqual(0, failed.returncode)
+                self.assertIn('skipMultiplayerWarning:true', failed.stderr)
+                self.assertEqual(original_manifest, manifest.read_bytes())
+                self.assertEqual(bad_value, options.read_bytes() if options.exists() else None)
+            options.write_bytes(saved_options)
             for row in rows:
                 asset = assets / row['name']
                 original = asset.read_bytes()

@@ -5,7 +5,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from verify_author_stock import verify
+from verify_author_stock import prepare_multiplayer_warning, verify, verify_multiplayer_warning
 
 
 class AuthorFidelityTests(unittest.TestCase):
@@ -22,9 +22,9 @@ class AuthorFidelityTests(unittest.TestCase):
             if path.startswith('mods/'):
                 row.update(projectId=12, fileId=34)
             self.rows.append(row)
-        self.put('configureddefaults/options.txt', (self.root/'options.txt').read_bytes())
         self.platform = {'minecraftVersion': '1.21.1', 'loader': {'type': 'neoforge', 'version': '21.1.248'}}
         self.write_json('portable-pack.json', self.platform)
+        prepare_multiplayer_warning(self.root)
         self.manifest = {'version': '1.0-author', 'minecraft': {'version': '1.21.1',
             'modLoaders': [{'id': 'neoforge-21.1.248', 'primary': True}]},
             'files': [{'projectID': 12, 'fileID': 34, 'required': True}]}
@@ -156,14 +156,46 @@ class AuthorFidelityTests(unittest.TestCase):
 
     def test_support_bytes_and_clean_profile_claims_are_enforced(self):
         self.put('configureddefaults/options.txt', b'non-author settings')
-        with self.assertRaisesRegex(ValueError, 'exact author options'):
+        with self.assertRaisesRegex(ValueError, 'skipMultiplayerWarning:true'):
             verify(self.root)
-        self.put('configureddefaults/options.txt', (self.root/'options.txt').read_bytes())
+        prepare_multiplayer_warning(self.root)
         self.lock['authorJarsExcluded'] = ['author.jar']
         self.write_json('tools/upstream-lock.json', self.lock)
         with self.assertRaisesRegex(ValueError, 'no content changes'):
             verify(self.root)
 
+    def test_author_replacement_cannot_restore_the_multiplayer_warning(self):
+        target = self.root / 'configureddefaults/options.txt'
+        for raw, expected in (
+            (b'lang:ru_ru\r\nskipMultiplayerWarning:false\r\nkey_jump:key.keyboard.f',
+             b'lang:ru_ru\r\nskipMultiplayerWarning:true\r\nkey_jump:key.keyboard.f'),
+            (b'\xef\xbb\xbfskipMultiplayerWarning:false\nother:value\n',
+             b'\xef\xbb\xbfskipMultiplayerWarning:true\nother:value\n'),
+            (b'lang:ru_ru\r\nkey_jump:key.keyboard.f\r\n',
+             b'lang:ru_ru\r\nkey_jump:key.keyboard.f\r\nskipMultiplayerWarning:true\r\n'),
+            (b'lang:ru_ru', b'lang:ru_ru\nskipMultiplayerWarning:true\n'),
+        ):
+            with self.subTest(raw=raw):
+                self.put('options.txt', raw)
+                self.put('configureddefaults/options.txt', raw)
+                with self.assertRaisesRegex(ValueError, 'skipMultiplayerWarning:true'):
+                    verify_multiplayer_warning(self.root)
+                self.assertTrue(prepare_multiplayer_warning(self.root))
+                verify_multiplayer_warning(self.root)
+                self.assertEqual(expected, target.read_bytes())
+                self.assertEqual(raw, (self.root / 'options.txt').read_bytes())
+                self.assertFalse(prepare_multiplayer_warning(self.root))
+
+    def test_missing_author_options_still_seed_only_the_warning(self):
+        (self.root / 'options.txt').unlink()
+        target = self.root / 'configureddefaults/options.txt'
+        target.unlink()
+        with self.assertRaisesRegex(ValueError, 'skipMultiplayerWarning:true'):
+            verify_multiplayer_warning(self.root)
+        self.assertTrue(prepare_multiplayer_warning(self.root))
+        verify_multiplayer_warning(self.root)
+        self.assertEqual(b'skipMultiplayerWarning:true\n', target.read_bytes())
+        self.assertFalse((self.root / 'options.txt').exists())
 
 if __name__ == '__main__':
     unittest.main()

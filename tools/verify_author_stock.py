@@ -5,6 +5,7 @@ import argparse
 import hashlib
 import json
 import pathlib
+import re
 from config_overrides import project_configs, projection_report
 
 
@@ -30,6 +31,38 @@ def safe(root, relative):
         if current == root:
             break
     return path
+
+
+def multiplayer_warning_defaults(root):
+    descriptor = json.loads(safe(root, 'portable-pack.json').read_bytes())
+    require(descriptor['minecraftVersion'] == '1.21.1',
+            'Review the native multiplayer warning option for this Minecraft version')
+    author_options = safe(root, 'options.txt')
+    raw = author_options.read_bytes() if author_options.exists() else b''
+    bom = b'\xef\xbb\xbf' if raw.startswith(b'\xef\xbb\xbf') else b''
+    options = raw.removeprefix(bom)
+    setting = b'skipMultiplayerWarning:true'
+    options, replaced = re.subn(rb'^skipMultiplayerWarning:[^\r\n]*', setting, options, flags=re.MULTILINE)
+    if not replaced:
+        newline = b'\r\n' if b'\r\n' in options else b'\n'
+        separator = newline if options and not options.endswith(b'\n') else b''
+        options += separator + setting + newline
+    return safe(root, 'configureddefaults/options.txt'), bom + options
+
+
+def prepare_multiplayer_warning(root):
+    target, expected = multiplayer_warning_defaults(root)
+    if target.is_file() and target.read_bytes() == expected:
+        return False
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(expected)
+    return True
+
+
+def verify_multiplayer_warning(root):
+    target, expected = multiplayer_warning_defaults(root)
+    require(target.is_file() and target.read_bytes() == expected,
+            'Prepared options must match the author options with skipMultiplayerWarning:true')
 
 
 def verify(root):
@@ -83,9 +116,7 @@ def verify(root):
     descriptor = json.loads((root/'portable-pack.json').read_text(encoding='utf-8-sig'))
     require(descriptor['minecraftVersion'] == lock['platform']['minecraftVersion']
             and descriptor['loader'] == lock['platform']['loader'], 'Portable platform differs from author manifest')
-    author_options = safe(root, 'options.txt')
-    require(digest(safe(root, 'configureddefaults/options.txt')) == digest(author_options),
-            'Fresh controls setup must start from exact author options bytes')
+    verify_multiplayer_warning(root)
     support = lock.get('supportFiles', [])
     for row in support:
         path = safe(root, row['path'])
@@ -115,5 +146,11 @@ def verify(root):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=pathlib.Path, default=pathlib.Path(__file__).resolve().parents[1])
+    parser.add_argument('--prepare-multiplayer-warning', action='store_true',
+                        help='prepare the delivered options from the author options after an import')
     arguments = parser.parse_args()
-    print(json.dumps(verify(arguments.root), ensure_ascii=False, indent=2))
+    if arguments.prepare_multiplayer_warning:
+        changed = prepare_multiplayer_warning(arguments.root.absolute())
+        print(json.dumps({'status': 'PASS', 'configuredDefaultsChanged': changed}))
+    else:
+        print(json.dumps(verify(arguments.root), ensure_ascii=False, indent=2))
