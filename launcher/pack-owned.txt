@@ -8,3 +8,4 @@ kubejs/startup_scripts/lanmc_journeymap_waypoint_policy.js
 kubejs/startup_scripts/lanmc_intel_hand_depth.js
 kubejs/startup_scripts/lanmc_journeymap_player_markers.js
 kubejs/startup_scripts/lanmc_lss_config_migration.js
+config/lanminecraft/experimental-world-confirmation.jar

@@ -1,3 +1,4 @@
 -Dlog4j.configurationFile=config/log4j2.xml
 -Xbootclasspath/a:config/native-version-metadata.jar
 -Dminecraft.portable.identity.windowTitleText=TerraFirma Rebirth 2
+-javaagent:config/lanminecraft/experimental-world-confirmation.jar
